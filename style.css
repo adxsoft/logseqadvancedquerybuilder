@@ -1,0 +1,70 @@
+#submit-container {
+    display: block;
+}
+
+#submit-container>button {
+    background: #e86375;
+}
+
+#submit-container>button:hover {
+    background: #dc4730;
+}
+
+.header1,
+a {
+    color: #e86375;
+}
+
+.header2,
+a {
+    color: #f19979;
+}
+
+.summer:hover,
+a:hover {
+    color: #dc4730;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+
+}
+
+#objtext {
+    -moz-appearance: textfield-multiline;
+    -webkit-appearance: textarea;
+    border: 1px solid gray;
+    overflow: auto;
+    padding: 4px;
+    width: 400px;
+    height: 200px;
+    font: medium -moz-fixed;
+    font: -webkit-small-control;
+}
+
+.yellow-text {
+    color: yellow;
+}
+
+.green-text {
+    color: green;
+}
+
+.red-text {
+    color: red;
+}
+
+::selection {
+    color: rgb(84, 85, 97);
+}
+
+::-moz-selection {
+    color: rgb(84, 85, 97);
+}
+
+ul {
+    list-style-type: disc !important;
+    padding-left: 1em;
+}
