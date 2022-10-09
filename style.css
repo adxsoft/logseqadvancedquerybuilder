@@ -1,67 +1,133 @@
-#submit-container {
-    display: block;
+/* clear all padding, margins */
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
 }
 
-#submit-container>button {
-    background: #e86375;
+html {
+    font-size: 14px;
 }
 
-#submit-container>button:hover {
-    background: #dc4730;
+body {
+    padding: 1rem;
+    font-family: 'Roboto', sans-serif;
 }
 
-.header1,
-a {
-    color: #e86375;
+.title {
+    margin-bottom: 2rem;
+    font-size: 2rem;
 }
 
-.header2,
-a {
-    color: #f19979;
+h3 {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.25rem;
+    color: rgba(8, 0, 255, 0.444);
 }
 
-.summer:hover,
-a:hover {
-    color: #dc4730;
+h5 {
+    font-family: 'Roboto', sans-serif;
+    font-size: 0.9rem;
+    color: rgba(55, 36, 13, 0.682);
 }
 
-.footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
 
+hr {
+    margin: 1rem 0;
 }
 
-#objtext {
-    -moz-appearance: textfield-multiline;
-    -webkit-appearance: textarea;
-    border: 1px solid gray;
-    overflow: auto;
-    padding: 4px;
+details {
+    padding: 0, 1rem;
+    color: #580a03;
+    font-size: 0.8rem;
+}
+
+details>summary {
+    /* list-style: none; */
+    color: #6b7ee2;
+    padding: rem;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.details-content {
+    color: #010413;
+    padding: 1rem;
+    font-size: 1.5vw;
+    overflow-wrap: break-word;
+    cursor: pointer;
+}
+
+button {
+    font-size: 0.9rem;
+    padding: 3px 3px;
+    background-color: antiquewhite;
+    border-radius: 6px;
+}
+
+select {
+    font-size: 0.8rem;
+    padding: 1px 1px;
     width: 400px;
-    height: 200px;
-    font: medium -moz-fixed;
-    font: -webkit-small-control;
+    background-color: rgb(200, 243, 243);
+    text-align: center;
 }
 
-.yellow-text {
-    color: yellow;
+textarea {
+    color: rgb(7, 7, 0);
+    width: 400px;
+    background-color: rgb(243, 239, 136);
+    font-size: 0.8rem;
+    font-weight: bold;
+    font-family: 'Courier New', Courier, monospace;
+    padding: 1px 1px;
+    background-color: rgb(200, 243, 243);
+    text-align: left;
 }
 
-.green-text {
-    color: green;
+.checkbox {
+    font-size: 0.8rem;
 }
 
-.red-text {
-    color: red;
+.statusbar {
+    font-size: 1rem;
+    padding: 1px 1px;
+    background-color: rgb(227, 197, 193);
+    text-align: center;
+    border: "thick solid #0000FF";
+
 }
 
-::selection {
-    color: rgb(84, 85, 97);
+blockquote {
+    background-color: rgb(212, 211, 205);
+    text-align: left;
 }
 
-::-moz-selection {
-    color: rgb(84, 85, 97);
+table {
+    /* table-layout: fixed; * /
+    /* width: 100%; */
+    border-collapse: collapse;
+    border: 1px solid purple;
+}
+
+th {
+    padding: 2px;
+    font-size: 1.8rem;
+}
+
+td {
+    padding: 2px;
+    font-size: 0.8rem;
+}
+
+/* zebra striping */
+
+tbody tr:nth-child(odd) {
+    background-color: #c8f2f4;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #ffffff;
 }
 
 ul {

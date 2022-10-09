@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html>
-    <h3 class="display-6 fw-bolder header1">Logseq Advanced Query Builder</h3>
-    <small>v0.1 Alpha</small>
+    <h3>Logseq Advanced Query Builder</h3>
+    <small>v0.1</small>
     <!-- <div>
         <H3>TODO</H3>
         <ul>
         </ul>
-    </div>
- -->
+    </div> -->
     <p>
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,17 +16,17 @@
         <script defer src="https://pyscript.net/alpha/pyscript.js"></script> -->
         
         <!-- Standard includes for latest pyscript components-->
-        <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css"/> -->
+        <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css"/>
         <script defer src="https://pyscript.net/latest/pyscript.js"></script>      
         
         <!-- Local includes for pyscript components -->
         <!-- <script defer src="/static/pyscript/pyscript.js"></script> -->
         
         <!-- Add bootstrap -->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap-dark-5@1.1.3/dist/css/bootstrap-night.min.css" rel="stylesheet">
+        <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap-dark-5@1.1.3/dist/css/bootstrap-night.min.css" rel="stylesheet"> -->
 
         <!-- Custom style.css -->
-        <!-- <link rel="stylesheet" href="style.css" type="text/css"> -->
+        <link rel="stylesheet" href="style.css" type="text/css">
         
         <title>Logseq Query Builder v0.01</title>
         <!-- <py-config>
@@ -51,27 +50,73 @@
     
     <body>
         <div style="width: 800px;">
-            <i>An Experimental online tool to help Logseq Users build advanced queries from simple commands.</i><br><b>Only working in Firefox Browser at this stage</b><hr>
-            <ul>
-                <li>Enter commands in the yellow area below or choose an example.</li>
-                <li>Tick <i>Include Query Comments</i> to show query line comments</li>
-                <li>Tick  <i>Copy as code block</i> to wrap query in a Logseq code block</li>
-                <li>Click the <b>Generate Advanced Query</b> button</li>
-                to build the query.
-                <ol>
-                    <li>Optionally you can include comments for each query line.</i>
-                </ol>
-                <li>Copy the generated advanced query to the clipboard></li>
-                <ol>
-                    <li>(if necessary scroll down to see the result)</i>
-                </ol>
-                
-                <li>Paste into Logseq using <i>Cmd(or Ctrl) Shift V</i></li><hr>
-            </ul>
+            <div>
+                <i>An Experimental online tool to help Logseq Users build advanced queries from simple commands.</i><br><hr>
+            </div>   
+            <details>
+                <summary>FAQ</summary>
+                    <details>
+                        <summary>How to use</summary>
+                        <div class="details-content">
+                            The simple commands are entered as a text outline in the Command Input area<br>
+                                <blockquote>
+                                    <pre>
+- commandname
+    - argument
+    - argument</pre>
+                                  </blockquote>
+                            <hr>
+                            <ul>
+                                <li>Enter commands in the yellow area below or choose an example.</li>
+                                <li>Tick <i>Include Query Comments</i> to show query line comments</li>
+                                <li>Tick  <i>Copy as code block</i> to wrap query in a Logseq code block</li>
+                                <li>Click the <b>Generate Advanced Query</b> button</li>
+                                to build the query.
+                                <ol>
+                                    <li>Optionally you can include comments for each query line.</i>
+                                </ol>
+                                <li>Copy the generated advanced query to the clipboard></li>
+                                <ol>
+                                    <li>(if necessary scroll down to see the result)</i>
+                                </ol>
+                                
+                                <li>Paste into Logseq using <i>Cmd(or Ctrl) Shift V</i></li><hr>
+                            </ul>
+                        </div>
+                    </details>
+                    <details>
+                        <summary>Simple Commands</summary>
+                        <div>
+                            <small>Note. Wildcards use *<br>
+                            <blockquote>                            
+                            test* - starts with text 'test'<br>
+                            *end - ends with text 'end'<br>
+                            *tax* - contains text 'tax'<br>
+                        </small>
+                            </blockquote>
+                            <table>
+                                <tr><td>Command</td><td>Description</td></tr>
+                                <tr><td><b>blocks</b></td><td>select logseq blocks</td></tr>
+                                <tr><td><b>blockproperties</b></td><td>select blocks by property values</td></tr>
+                                <tr><td><b>blocktags</b></td><td>select blocks by tag</td></tr>
+                                <tr><td><b>deadline</b></td><td>select pages or blocks that have a deadline</td></tr>
+                                <tr><td><b>deadlinebetween</b></td><td>select pages or blocks that have a deadline in a date range</td></tr>
+                                <tr><td><b>journalsbetween</b></td><td>only select journal pages in a date range</td></tr>
+                                <tr><td><b>journalonly</b></td><td>only select journal pages</td></tr>
+                                <tr><td><b>namespace</b></td><td>select pages or blocks within a namespace</td></tr>
+                                <tr><td><b>pages</b></td><td>select logseq pages</td></tr>
+                                <tr><td><b>pageproperties</b></td><td>select pages by page properties</td></tr>
+                                <tr><td><b>pagetags</b></td><td>select pages by tag</td></tr>
+                                <tr><td><b>tasks</b></td><td>select tasks</td></tr>
+                                <tr><td><b>scheduled</b></td><td>select pages or blocks that are scheduled</td></tr>
+                                <tr><td><b>scheduledbetween</b></td><td>select pages or blocks that are scheduled in a date range</td></tr>                            </table>
+                        </div>
+                    </details>
+                </div>
+            <hr>
         </div>
-        <h5 class="display1 fw-bolder header2">Command Input</h5>
-        <button id="clear_commands_button" type="button" class="btn btn-primary active" role="button" aria-pressed="true">Clear</button>
-        <select id="command_examples" class="btn btn-primary active" style="background-color:rgb(20, 50, 113);">
+        <h5>Command Input</h5>
+        <select id="command_examples">
             <option value='' selected>Choose Example..</option>
             <option value='title: pages command - pages by wildcards&#10- pages&#10    - *'>pages - select all pages</option>
             <option value='title: pages command - specific pages&#10- pages&#10    - yourpagetitle1&#10    - yourpagetitle2'>pages - select specific pages</option>
@@ -95,23 +140,32 @@
         </select>
         <br>
         <p>
-            <textarea id="commands_input" rows="10" cols="50" style="background-color:rgb(195, 192, 117); color:rgb(7, 7, 0);">
-            </textarea>
+            <textarea id="commands_input" rows="10" cols="50">
+            <pre></pre></textarea>
+            <p>
+            <button id="clear_commands_button" type="button">Clear</button>
         <hr>
-        <h5 class="display1 fw-bolder header2">Generated Query</h5>
-        <input id='command_comments_checkbox' type="checkbox" style="margin-right:10px;" value="unchecked">Include Query Comments
-        <input id='codeblock_checkbox' type="checkbox" style="margin-right:10px; margin-left:10px;" value="unchecked">Copy as code block<p>
-        <br>
-        <button id="generate_query_button" type="button"  class="btn btn-primary active" role="button" aria-pressed="true">Generate Advanced Query</button>
-        <button id="copy" hidden class="btn btn-primary active" role="button" aria-pressed="true"">Copy Query to Clipboard</button>
+        <h5>Generated Query</h5>
+        <div class="checkbox">
+            <input id='command_comments_checkbox' type="checkbox" style="margin-right:10px;" value="unchecked">Include Query Comments
+            <input id='codeblock_checkbox' type="checkbox" style="margin-right:10px; margin-left:10px;" value="unchecked">Copy as code block<p>
+        </div>
+        <button id="generate_query_button" type="button">Generate Advanced Query</button>
+        <button id="copy" hidden class="btn btn-primary active" role="button" aria-pressed="true">Copy Query to Clipboard</button>
         <p>
         <div id="command_list"></div>
-        <div id="advanced_query" style="font-family:courier; background-color:rgb(99, 45, 27);"></div>
+        <br>
+        <div id="advanced_query" style="background-color:rgb(197, 250, 188); border: 1; color:rgb(7, 7, 0);"></div>
         <p>
-                                
-        <div id="print_output"  style="background-color:rgb(6, 7, 0);"><pre></pre></div>></div>
-        <!-- <py-script output="print_output" src="queryDict.py"></py-script> -->
-        <py-script output="print_output" src="logseqquerybuilder.py"></py-script>
+        <hr>                        
+        <h5>Status</h5>
+        <div id="print_output"  class="statusbar";>
+            <pre>
+                <py-script output="print_output" src="logseqquerybuilder.py"></py-script>
+            </pre>
+        </div>
+    </div>
+        
     </body>
     <script>
         document.getElementById("commands_input").focus()

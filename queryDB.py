@@ -343,9 +343,9 @@ querylineDict = {
         'datalog': ':breadcrumb-show? true',
         'comment': 'Show breadcrumbs above each block'
     },
-    'collapsed+false':
+    'collapsed_false':
     {
-        'name': 'collapsed+false',
+        'name': 'collapsed_false',
         'datalog': ' :collapsed? false',
         'comment': 'Toggle collapse or fold'
     },
@@ -376,101 +376,83 @@ commandsDict = {
             "findblocks",
             "where"
         ],
-        "description": ""
+        "description": "select logseq blocks"
     },
     "blockproperties": {
         "querylines":  [
             "findblocks",
             "where"
         ],
-        "description": ""
+        "description": "select blocks by property values"
     },
     "blocktags":  {
         "querylines": [
         ],
-        "description": ""
+        "description": "select blocks by tag"
+    },
+    "deadline": {
+        "querylines":  [
+            "deadline"
+        ],
+        "description": "select pages or blocks that have a deadline"
+    },
+    "deadlinebetween": {
+        "querylines":  [
+            "deadlinebetween"
+        ],
+        "description": "select pages or blocks that have a deadline in a date range"
+    },
+    "journalsbetween": {
+        "querylines":  [
+        ],
+        "description": "only select journal pages in a date range"
+    },
+    "journalonly": {
+        "querylines":  [
+        ],
+        "description": "only select journal pages"
+    },
+    "namespace": {
+        "querylines":  [
+        ],
+        "description": "select pages or blocks within a namespace"
     },
     "pages":   {
         "querylines": [
             "findblocks",
             "where"
         ],
-        "description": ""
+        "description": "select logseq pages"
     },
     "pageproperties":  {
         "querylines": [
             "findblocks",
             "where"
         ],
-        "description": ""
+        "description": "select pages by page properties"
     },
     "pagetags":  {
         "querylines": [
             "findblocks",
             "where"
         ],
-        "description": ""
-    },
-    "pageproperties": {
-        "querylines":  [
-            "findblocks",
-            "where"
-        ],
-        "description": ""
-    },
-    "namespace": {
-        "querylines":  [
-        ],
-        "description": ""
-    },
-    "journalonly": {
-        "querylines":  [
-        ],
-        "description": ""
-    },
-    "journalsbetween": {
-        "querylines":  [
-        ],
-        "description": ""
-    },
-    "format": {
-        "querylines":  [
-        ],
-        "description": ""
+        "description": "select pages by tag"
     },
     "tasks": {
         "querylines":  [
         ],
-        "description": ""
+        "description": "select tasks"
     },
     "scheduled": {
         "querylines":  [
             "scheduled"
         ],
-        "description": ""
-    },
-    "deadline": {
-        "querylines":  [
-            "deadline"
-        ],
-        "description": ""
+        "description": "select pages or blocks that are scheduled"
     },
     "scheduledbetween": {
         "querylines":  [
             "scheduledbetween"
         ],
-        "description": ""
-    },
-    "deadlinebetween": {
-        "querylines":  [
-            "deadlinebetween"
-        ],
-        "description": ""
-    },
-    "daterange": {
-        "querylines":  [
-            "daterange"
-        ],
-        "description": ""
+        "description": "select pages or blocks that are scheduled in a date range"
     },
 }

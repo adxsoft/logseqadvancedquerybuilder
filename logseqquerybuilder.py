@@ -2,6 +2,7 @@
 
 from queryDB import *
 import copy
+import time
 
 
 def initialiseQuery():
@@ -62,7 +63,7 @@ def buildCommonQueryLines():
     for key in defaultQueryLines:
         for querylinekey in defaultQueryLines[key]:
             if showcommandcomments == True:
-                query[key].append(getQueryLineComment(querylinekey))
+                query[key].append('\n'+getQueryLineComment(querylinekey))
             query[key].append(getQueryLine(querylinekey))
 
     return
@@ -147,7 +148,7 @@ def addQueryLines(command, prefix, querylinekey, arg, querysegment):
     global mode
 
     if showcommandcomments == True:
-        query[querysegment].append(getQueryLineComment(querylinekey))
+        query[querysegment].append('\n'+getQueryLineComment(querylinekey))
 
     args = arg.split(",")
 
@@ -487,20 +488,23 @@ def pyscriptCodeBlock(event):
 def pyscriptChooseExample(event):
     if mode != "pyScript":
         return
-
     # get selected Example and fill the commands Input Text Area
     # Element('print_output').write(, 'Choose Example Option Pressed')
-    examples_options = document.getElementById('command_examples')
+    examples_options = Element('command_examples')
     if examples_options.value != "Choose Example..":
+        advanced_query_text = document.getElementById('advanced_query')
+        advanced_query_text.textContent = ''
+        Element('print_output').write(
+            "Example selected .. now press 'Generate Advanced Query' button")
+
         document.getElementById(
             'commands_input').value = examples_options.value
+        print('value is ', examples_options.value)
 
 
 def pyscriptAdvancedQueryText(event):
     if mode != "pyScript":
         return
-    advanced_query_text = document.getElementById('advanced_query')
-    advanced_query_text.textContent = 'HELLO!!'
 
 
 def pyscriptQueryBuild(event):
@@ -536,7 +540,7 @@ def pyScriptInitialise():
         return
 
     from js import document
-    from pyodide import create_proxy
+    from pyodide.ffi import create_proxy
 
     # connect the generate advanced query button
     generate_query_button = document.getElementById('generate_query_button')
@@ -550,8 +554,8 @@ def pyScriptInitialise():
 
     # connect the Examples button
     examples_options = document.getElementById('command_examples')
-    clickfunction = create_proxy(pyscriptChooseExample)
-    examples_options.addEventListener("click", clickfunction)
+    inputfunction = create_proxy(pyscriptChooseExample)
+    examples_options.addEventListener("input", inputfunction)
     examples_options.value = ""  # set to first option
 
     # connect the Command Comments Checkbox
