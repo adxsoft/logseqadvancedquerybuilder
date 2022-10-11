@@ -11,9 +11,9 @@ The tool is built in python 3 and uses pyscript (https://pyscript.net/) for the 
 
 <i>Note. pyscript can take quite a few seconds to start the first time you use the tool. Thereafter the load time for the page is reasonably good.</i>
 
-If you want to just run the python program logseqquerybuilder.py then you make the following changes to <i>logseqquerybuilder.py</i>
+If you want to just run the python program <i>logseqquerybuilder.py</i> then you make the following changes in the code of <i>logseqquerybuilder.py</i>
 
-1. change the line <pre lang="python">mode = "pyscript"</pre> to <pre lang="python">mode = "python"</pre>
+1. change the line `mode = "pyscript"` to `mode = "python"`
 
 2. To input a set of simple commands to generate an advanced query, add the following code at the end of <i>logseqquerybuilder.py</i>
 
