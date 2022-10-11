@@ -148,7 +148,8 @@ def addQueryLines(command, prefix, querylinekey, arg, querysegment):
     global mode
 
     if showcommandcomments == True:
-        query[querysegment].append('\n'+getQueryLineComment(querylinekey))
+        query[querysegment].append(
+            '\n'+getQueryLineComment(prefix+querylinekey))
 
     args = arg.split(",")
 
@@ -431,7 +432,7 @@ def printInputCommandList(commands):
                 (len(commandline) - len(commandline.lstrip())) + commandline.lstrip()
             msg += commandline+"<BR>"
 
-        Element('command_list').write(msg)
+        # Element('command_list').write(msg)
     else:
         print("----------------------------")
         print("Input Command List")
@@ -531,7 +532,8 @@ def pyscriptQueryBuild(event):
     hidden = copy_button.getAttribute("hidden")
     copy_button.removeAttribute("hidden")
 
-    Element('print_output').write('Advanced Query Generated')
+    Element('print_output').write(
+        "Advanced Query Generated!<br>- Tick 'Include Query Comments' if desired<br>- Tick 'Copy as code block' if desired<br>Click 'Copy Query to Clipboard")
 
 
 def pyScriptInitialise():
@@ -611,7 +613,9 @@ if mode == "pyScript":
 print('Finished Loading .. You can now enter commands')
 
 # specific tests in local mode (python)
-# testQueryBuild("""title: ????
+# testQueryBuild("""title: pages command - specific pages
 # - pages
-#     - test*
+#     - yourpagetitle1
+#     - yourpagetitle2
+#     - not fred
 # """)

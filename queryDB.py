@@ -83,13 +83,13 @@ querylineDict = {
     {
         'name': 'scheduledfrom',
         'datalog': '[(>= ?scheduleddate ?startdate)]',
-        'comment': 'select if scheduleddate greater than start date'
+        'comment': 'Select if scheduleddate greater than start date'
     },
     'scheduledto':
     {
         'name': 'scheduledto',
         'datalog': '[(<= ?scheduleddate ?enddate)]',
-        'comment': 'select if scheduleddate less than end date'
+        'comment': 'Select if scheduleddate less than end date'
     },
     'deadline':
     {
@@ -101,13 +101,13 @@ querylineDict = {
     {
         'name': 'deadlinefrom',
         'datalog': '[(>= ?deadlinedate ?startdate)]',
-        'comment': 'select if deadlinedate greater than start date'
+        'comment': 'Select if deadlinedate greater than start date'
     },
     'deadlineto':
     {
         'name': 'deadlineto',
         'datalog': '[(<= ?deadlinedate ?enddate)]',
-        'comment': 'select if deadlinedate less than end date'
+        'comment': 'Select if deadlinedate less than end date'
     },
     'linksandtags':
     {
@@ -125,25 +125,25 @@ querylineDict = {
     {
         'name': 'pagename_is',
         'datalog': '[?page :block/name "$$ARG1"]',
-        'comment': 'select specific page'
+        'comment': 'Select specific page'
     },
     'not_pagename_is':
     {
         'name': 'not_pagename_is',
         'datalog': '(not [?page :block/name "$$ARG1"])',
-        'comment': 'exclude specific page'
+        'comment': 'Exclude specific page'
     },
     'tasks_are':
     {
         'name': 'tasks_are',
         'datalog': '[(contains? #{"$$ARG1"} ?marker)]',
-        'comment': 'select block if it has one or more tasks (TODO, DONE etc)'
+        'comment': 'Select block if it has one or more tasks (TODO, DONE etc)'
     },
     'not_tasks_are':
     {
         'name': 'not_tasks_are',
         'datalog': '(not [(contains? #{"$$ARG1"} ?marker)])',
-        'comment': 'exclude block if it has one or more tasks'
+        'comment': 'Exclude block if it has one or more tasks'
     },
     'page_is_journal':
     {
@@ -167,13 +167,13 @@ querylineDict = {
     {
         'name': 'journalfrom',
         'datalog': '[(>= ?journaldate ?startdate)]',
-        'comment': 'select if journaldate greater than start date'
+        'comment': 'Select if journaldate greater than start date'
     },
     'journalto':
     {
         'name': 'journalto',
         'datalog': '[(<= ?journaldate ?enddate)]',
-        'comment': 'select if journalddate less than end date'
+        'comment': 'Select if journalddate less than end date'
     },
     'page_properties_are':
     {
@@ -185,7 +185,7 @@ querylineDict = {
     {
         'name': 'not_page_properties_are',
         'datalog': '(not (page-property ?page :$$ARG1 $$ARG2))',
-        'comment': 'Do not select if block or page has a single property (arg1) with value arg2'
+        'comment': 'Exclude a block or page if it has a single property (arg1) with value arg2'
     },
     'block_properties_are':
     {
@@ -197,19 +197,19 @@ querylineDict = {
     {
         'name': 'not_block_properties_are',
         'datalog': '(not (property ?block :$$ARG1 $$ARG2))',
-        'comment': 'Do not select if block has a single property (arg1) with value arg2'
+        'comment': 'Exclude if block has a single property (arg1) with value arg2'
     },
     'blocktags_are':
     {
         'name': 'blocktags_are',
         'datalog': '(page-ref ?block "$$ARG1")',
-        'comment': 'select block if it has a specific tag or page link'
+        'comment': 'Select block if it has a specific tag or page link'
     },
     'not_blocktags_are':
     {
         'name': 'not_blocktags_are',
         'datalog': '(not (page-ref ?block "$$ARG1"))',
-        'comment': 'exclude block if it has a specific tag or page link'
+        'comment': 'Exclude block if it has a specific tag or page link'
     },
     'pagetags_are':
     {
@@ -233,7 +233,7 @@ querylineDict = {
     {
         'name': 'namespace',
         'datalog': '(not (namespace ?page "$$ARG1"))',
-        'comment': 'exclude if block is not within a specific namespace'
+        'comment': 'Exclude if block is not within a specific namespace'
     },
     'arg_pagename_startswith':
     {
@@ -376,7 +376,7 @@ commandsDict = {
             "findblocks",
             "where"
         ],
-        "description": "select logseq blocks"
+        "description": "select logseq blocks by wildcards"
     },
     "blockproperties": {
         "querylines":  [
@@ -422,7 +422,7 @@ commandsDict = {
             "findblocks",
             "where"
         ],
-        "description": "select logseq pages"
+        "description": "select pages by wildcards"
     },
     "pageproperties":  {
         "querylines": [

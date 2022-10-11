@@ -36,18 +36,32 @@ hr {
     margin: 1rem 0;
 }
 
-details {
-    padding: 0, 1rem;
-    color: #580a03;
-    font-size: 0.8rem;
-}
+/* Details/Summary Indentation levels */
 
-details>summary {
-    /* list-style: none; */
+.level1 {
+    /* list-style: disc; */
     color: #6b7ee2;
     padding: rem;
     font-size: 1rem;
     cursor: pointer;
+}
+
+.level2 {
+    /* list-style: disc; */
+    color: #6b7ee2;
+    padding: rem;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-left: 1rem;
+}
+
+.level3 {
+    /* list-style: disc; */
+    color: #6b7ee2;
+    padding: rem;
+    font-size: 2rem;
+    cursor: pointer;
+    margin-left: 1rem;
 }
 
 .details-content {
@@ -69,7 +83,8 @@ select {
     font-size: 0.8rem;
     padding: 1px 1px;
     width: 400px;
-    background-color: rgb(200, 243, 243);
+    background-color: rgb(45, 34, 170);
+    color: rgb(213, 210, 218);
     text-align: center;
 }
 
@@ -81,20 +96,32 @@ textarea {
     font-weight: bold;
     font-family: 'Courier New', Courier, monospace;
     padding: 1px 1px;
-    background-color: rgb(200, 243, 243);
     text-align: left;
 }
+
+.generatedquery {
+    color: rgb(7, 7, 0);
+    width: 400px;
+    background-color: rgb(203, 241, 165);
+    font-size: 0.8rem;
+    font-weight: bold;
+    font-family: 'Courier New', Courier, monospace;
+    padding: 1px 1px;
+    text-align: left;
+}
+
+
 
 .checkbox {
     font-size: 0.8rem;
 }
 
 .statusbar {
-    font-size: 1rem;
-    padding: 1px 1px;
-    background-color: rgb(227, 197, 193);
-    text-align: center;
-    border: "thick solid #0000FF";
+    font-size: 0.9rem;
+    padding: 4px 1px;
+    background-color: rgb(114, 221, 233);
+    text-align: left;
+    border: 1;
 
 }
 
@@ -104,8 +131,6 @@ blockquote {
 }
 
 table {
-    /* table-layout: fixed; * /
-    /* width: 100%; */
     border-collapse: collapse;
     border: 1px solid purple;
 }

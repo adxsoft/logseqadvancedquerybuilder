@@ -53,9 +53,9 @@
             <div>
                 <i>An Experimental online tool to help Logseq Users build advanced queries from simple commands.</i><br><hr>
             </div>   
-            <details>
+            <details  class="level1">
                 <summary>FAQ</summary>
-                    <details>
+                    <details class="level2">
                         <summary>How to use</summary>
                         <div class="details-content">
                             The simple commands are entered as a text outline in the Command Input area<br>
@@ -72,22 +72,22 @@
                                 <li>Tick  <i>Copy as code block</i> to wrap query in a Logseq code block</li>
                                 <li>Click the <b>Generate Advanced Query</b> button</li>
                                 to build the query.
-                                <ol>
+                                <ul>
                                     <li>Optionally you can include comments for each query line.</i>
-                                </ol>
+                                </ul>
                                 <li>Copy the generated advanced query to the clipboard></li>
-                                <ol>
+                                <ul>
                                     <li>(if necessary scroll down to see the result)</i>
-                                </ol>
+                                </l>
                                 
                                 <li>Paste into Logseq using <i>Cmd(or Ctrl) Shift V</i></li><hr>
                             </ul>
                         </div>
                     </details>
-                    <details>
-                        <summary>Simple Commands</summary>
+                    <details class="level2">
+                        <summary>Simple Command List</summary>
                         <div>
-                            <small>Note. Wildcards use *<br>
+                            <small>Note. Wildcards can be full name or partial name using *<br>
                             <blockquote>                            
                             test* - starts with text 'test'<br>
                             *end - ends with text 'end'<br>
@@ -95,8 +95,7 @@
                         </small>
                             </blockquote>
                             <table>
-                                <tr><td>Command</td><td>Description</td></tr>
-                                <tr><td><b>blocks</b></td><td>select logseq blocks</td></tr>
+                                <tr><td><b>blocks</b></td><td>select logseq blocks by wildcards</td></tr>
                                 <tr><td><b>blockproperties</b></td><td>select blocks by property values</td></tr>
                                 <tr><td><b>blocktags</b></td><td>select blocks by tag</td></tr>
                                 <tr><td><b>deadline</b></td><td>select pages or blocks that have a deadline</td></tr>
@@ -104,12 +103,70 @@
                                 <tr><td><b>journalsbetween</b></td><td>only select journal pages in a date range</td></tr>
                                 <tr><td><b>journalonly</b></td><td>only select journal pages</td></tr>
                                 <tr><td><b>namespace</b></td><td>select pages or blocks within a namespace</td></tr>
-                                <tr><td><b>pages</b></td><td>select logseq pages</td></tr>
+                                <tr><td><b>pages</b></td><td>select pages by wildcards</td></tr>
                                 <tr><td><b>pageproperties</b></td><td>select pages by page properties</td></tr>
                                 <tr><td><b>pagetags</b></td><td>select pages by tag</td></tr>
                                 <tr><td><b>tasks</b></td><td>select tasks</td></tr>
                                 <tr><td><b>scheduled</b></td><td>select pages or blocks that are scheduled</td></tr>
                                 <tr><td><b>scheduledbetween</b></td><td>select pages or blocks that are scheduled in a date range</td></tr>                            </table>
+                        </div>
+                    </details>
+                    <details class="level2">
+                        <summary>About</summary>
+                        <div class="details-content">
+                            This web site is hosted on github pages<br>
+                            source code is available <a href="https://github.com/adxsoft/logseqadvancedquerybuilder">here</a>
+                        </div>
+                    </details>
+                    <details class="level2">
+                        <summary>Licence</summary>
+                        <div class="details-content">
+                            This tool is free to use by anyone. I built it for my own educational purposes to learn advanced queries and I'm still a novice so the generated queries reflect my current understanding of advanced queries that I have been able to test on Logseq 0.8.2 in October 2022<br>
+                            The advanced queries generated are my interpretation of advanced queries from researching the logseq discord forum and links on the logseq site.<br>
+                            I have not yet included the result-transform or view sections of advanced queries as I am still trying to understand them sufficiently to generate meaningful queries.
+                        <hr>
+                            <h5>DISCLAIMER</h5>
+                            <BR>
+                            logseqquerybuilder is distributed under GNU General Public License v3.<BR>
+                            <BR>
+                            This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you are welcome to<BR>
+                            redistribute it under certain conditions.<BR>
+                            <BR>
+                            <h5>LICENSE</h5>
+                            <BR>
+                            This program is free software: you can redistribute it and/or modify<BR>
+                            it under the terms of the GNU General Public License as published by<BR>
+                            the Free Software Foundation, either version 3 of the License, or<BR>
+                            (at your option) any later version.<BR>
+                            <BR>
+                            This program is distributed in the hope that it will be useful,<BR>
+                            but WITHOUT ANY WARRANTY; without even the implied warranty of<BR>
+                            MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.<BR>
+                            <BR>
+                            Please see http://www.gnu.org/licenses/ http://www.gnu.org/licenses/ for details.<BR>
+                            <BR>
+                            <h5>WARRANTY</h5>
+                            <BR>
+                            THERE IS NO WARRANTY FOR THE PROGRAM, TO THE EXTENT PERMITTED BY<BR>
+                            APPLICABLE LAW. EXCEPT WHEN OTHERWISE STATED IN WRITING THE COPYRIGHT<BR>
+                            HOLDERS AND/OR OTHER PARTIES PROVIDE THE PROGRAM “AS IS” WITHOUT WARRANTY<BR>
+                            OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO,<BR>
+                            THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR<BR>
+                            PURPOSE. THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE PROGRAM<BR>
+                            IS WITH YOU. SHOULD THE PROGRAM PROVE DEFECTIVE, YOU ASSUME THE COST OF<BR>
+                            ALL NECESSARY SERVICING, REPAIR OR CORRECTION.<BR>
+                            <BR>
+                            <h5>LIABILITY</h5>
+                            <BR>
+                            IN NO EVENT UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN WRITING WILL<BR>
+                            ANY COPYRIGHT HOLDER, OR ANY OTHER PARTY WHO MODIFIES AND/OR CONVEYS THE<BR>
+                            PROGRAM AS PERMITTED ABOVE, BE LIABLE TO YOU FOR DAMAGES, INCLUDING ANY<BR>
+                            GENERAL, SPECIAL, INCIDENTAL OR CONSEQUENTIAL DAMAGES ARISING OUT OF THE<BR>
+                            USE OR INABILITY TO USE THE PROGRAM (INCLUDING BUT NOT LIMITED TO LOSS OF<BR>
+                            DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR THIRD<BR>
+                            PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS),<BR>
+                            EVEN IF SUCH HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF<BR>
+                            SUCH DAMAGES.
                         </div>
                     </details>
                 </div>
@@ -140,8 +197,9 @@
         </select>
         <br>
         <p>
-            <textarea id="commands_input" rows="10" cols="50">
-            <pre></pre></textarea>
+            <pre><textarea id="commands_input" rows="10" cols="50">
+                </textarea>
+            </pre>
             <p>
             <button id="clear_commands_button" type="button">Clear</button>
         <hr>
@@ -155,19 +213,17 @@
         <p>
         <div id="command_list"></div>
         <br>
-        <div id="advanced_query" style="background-color:rgb(197, 250, 188); border: 1; color:rgb(7, 7, 0);"></div>
+        <div id="advanced_query" class="generatedquery"></div>
         <p>
         <hr>                        
         <h5>Status</h5>
         <div id="print_output"  class="statusbar";>
-            <pre>
-                <py-script output="print_output" src="logseqquerybuilder.py"></py-script>
-            </pre>
         </div>
     </div>
-        
-    </body>
-    <script>
+    
+</body>
+<py-script output="print_output" src="logseqquerybuilder.py"></py-script>
+<script>
         document.getElementById("commands_input").focus()
 
         function copySummary(){
