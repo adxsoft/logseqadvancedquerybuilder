@@ -181,11 +181,11 @@
             <option value='title: pages command - ignore pages (including wildcards)&#10- pages&#10    - not yourpagetitle1&#10    - not yourpagetitle2    - not mypage*&#10    - not starttext*&#10    - not *endtext&#10    - not *anytextanywhere*'>pages - ignore various pages</option>
             <option value='title: blocks command - ignore blocks using wildcards&#10- pages&#10    - not starttext*&#10    - not *endtext&#10    - not *anytextanywhere*'>blocks - by wildcards</option>
             <option value='title: blocktags - select and exclude block level tags&#10- blocktags&#10    - tag1&#10    - tag2&#10    - not tag3'>blocktags - select and exclude block level tags</option>
-            <option value='title: blocktags and pages example&#10- pages&#10    - starttext*&#10    - *endtext&#10    - *anytextanywhere*&#10    - not pagetitle1- blocktags&#10    - tag1&#10    - tag2&#10    - not tag3'>blocktags and pages</option>
+            <option value='title: blocktags and pages example&#10- pages&#10    - starttext*&#10    - *endtext&#10    - *anytextanywhere*&#10    - not pagetitle1&#10- blocktags&#10    - tag1&#10    - tag2&#10    - not tag3'>blocktags and pages</option>
             <option value='title: pagetags - page level tags&#10- pages&#10    - starttext*&#10    - *endtext&#10    - *anytextanywhere*&#10    - not pagetitle1&#10- pagetags&#10    - pagetag1&#10    - pagetag2&#10    - not pagetag3'>pagetags - page level tags</option>
             <option value='title: pagetags and pages&#10- pages&#10    - starttext*&#10    - *endtext&#10    - *anytextanywhere*&#10    - not pagetitle1&#10- pagetags&#10    - pagetag1&#10    - pagetag2&#10    - not pagetag3'>pagetags - with pages selection</option>
             <option value='title: select and exclude task types&#10- tasks&#10    - TODO&#10    - not DOING'>tasks - select and exclude task types</option>
-            <option value='title: select and exclude task types&#10- pages&#10    - meeting*- tasks&#10    - TODO&#10    - not DOING'>tasks - tasks and pages</option>
+            <option value='title: select and exclude task types&#10- pages&#10    - meeting*&#10- tasks&#10    - TODO&#10    - not DOING'>tasks - tasks and pages</option>
             <option value='title: select and exclude pages with page properties&#10- pageproperties&#10    - pagetype, "meeting"&#10    - pagetype, "seminar"&#10    - not occurence, 1'>page properties - select pages using page property</option>
             <option value='title: select and exclude blocks with block properties&#10- blockproperties&#10    - grouptype, "meeting"&#10    - grouptype, "seminar"&#10    - not occurence, 1'>block properties - select blocks using block property</option>
             <option value='title: only search in specific namespace&#10- namespace&#10    - mynamespace'>namespace - only search in specific namespace</option>
@@ -194,7 +194,12 @@
             <option value='- schedulebetween&#10    - :today :30d-after'>scheduled - find scheduled blocks in a date range</option>
             <option value='title: find blocks with deadlines&#10- scheduled'>deadline - find blocks with deadlines</option>
             <option value='- deadlinebetween&#10    - :today :30d-after'>deadline - find deadline blocks in a date range</option>
-        </select>
+            <option value='- journalonly'>journalonly - find journals only (not pages)</option>
+            <option value='- journalsbetween&#10    - :today :30d-after'>journalsbetween - find future journals in a date range</option>
+            <option value='- journalsbetween&#10    - :30d-before :today'>journalsbetween - find past journals in a date range</option>
+            
+                        
+                    </select>
         <br>
         <p>
             <pre><textarea id="commands_input" rows="10" cols="50">
