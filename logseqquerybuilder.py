@@ -584,7 +584,8 @@ def pyScriptInitialise():
 # === global variables ===
 
 # mode global variable
-# for local testing set the mode to python
+
+# for local testing or execution set the mode to python
 # for web deployment set the mode to pyscript
 mode = "python"
 # mode = "pyScript"

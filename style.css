@@ -1,3 +1,33 @@
+/* theme colors */
+
+:root {
+
+
+    /* Dark theme */
+    --dark-bg: #00384d;
+    --dark-fg: #b0e1f4c3;
+
+    /* Light theme */
+    --light-bg: #d1f0f995;
+    --light-fg: rgb(59, 44, 44);
+
+    /* Defaults
+
+    For a dark theme use these lines
+    --current-bg: var(--dark-bg);
+    --current-fg: var(--dark-fg);
+    
+    For a light theme use these lines
+    --current-bg: var(--light-bg);
+    --current-fg: var(--light-fg);
+
+    */
+
+    --current-bg: var(--light-bg);
+    --current-fg: var(--light-fg);
+}
+
+
 /* clear all padding, margins */
 * {
     padding: 0;
@@ -12,7 +42,16 @@ html {
 body {
     padding: 1rem;
     font-family: 'Roboto', sans-serif;
+    background-color: var(--current-bg);
+    color: var(--current-fg);
 }
+
+a {
+    background-color: var(--current-bg);
+    color: var(--current-fg);
+
+}
+
 
 .title {
     margin-bottom: 2rem;
@@ -22,13 +61,13 @@ body {
 h3 {
     font-family: 'Roboto', sans-serif;
     font-size: 1.25rem;
-    color: rgba(8, 0, 255, 0.444);
+    color: var(--current-fg);
 }
 
 h5 {
     font-family: 'Roboto', sans-serif;
     font-size: 0.9rem;
-    color: rgba(55, 36, 13, 0.682);
+    color: var(--current-fg);
 }
 
 
@@ -40,7 +79,8 @@ hr {
 
 .level1 {
     /* list-style: disc; */
-    color: #6b7ee2;
+    background-color: var(--current-bg);
+    color: var(--current-fg);
     padding: rem;
     font-size: 1rem;
     cursor: pointer;
@@ -48,7 +88,8 @@ hr {
 
 .level2 {
     /* list-style: disc; */
-    color: #6b7ee2;
+    background-color: var(--current-bg);
+    color: var(--current-fg);
     padding: rem;
     font-size: 1rem;
     cursor: pointer;
@@ -57,7 +98,8 @@ hr {
 
 .level3 {
     /* list-style: disc; */
-    color: #6b7ee2;
+    background-color: var(--current-bg);
+    color: var(--current-fg);
     padding: rem;
     font-size: 2rem;
     cursor: pointer;
@@ -65,7 +107,8 @@ hr {
 }
 
 .details-content {
-    color: #010413;
+    background-color: var(--current-bg);
+    color: var(--current-fg);
     padding: 1rem;
     font-size: 0.8rem;
     overflow-wrap: break-word;
@@ -83,8 +126,8 @@ select {
     font-size: 0.8rem;
     padding: 1px 1px;
     width: 400px;
-    background-color: rgb(45, 34, 170);
-    color: rgb(213, 210, 218);
+    background-color: #00384d;
+    color: white;
     text-align: center;
 }
 
@@ -119,41 +162,49 @@ textarea {
 .statusbar {
     font-size: 0.9rem;
     padding: 4px 1px;
-    background-color: rgb(114, 221, 233);
+    background-color: var(--current-bg);
+    color: var(--current-fg);
+
     text-align: left;
     border: 1;
 
 }
 
 blockquote {
-    background-color: rgb(212, 211, 205);
+    background-color: var(--current-bg);
+    color: var(--current-fg);
     text-align: left;
 }
 
 table {
+    background-color: var(--current-bg);
+    color: var(--current-fg);
     border-collapse: collapse;
-    border: 1px solid purple;
+    border: 1px solid var(--current-fg);
 }
 
 th {
     padding: 2px;
     font-size: 1.8rem;
+    border: 1px solid var(--current-fg);
 }
 
 td {
     padding: 2px;
     font-size: 0.8rem;
+    border: 1px solid var(--current-fg);
 }
 
-/* zebra striping */
+/* zebra striping tbody tr:nth-child(odd) {
+    background-color: var(--current-bg);
+    color: var(--current-fg);
 
-tbody tr:nth-child(odd) {
-    background-color: #c8f2f4;
 }
 
 tbody tr:nth-child(even) {
-    background-color: #ffffff;
-}
+    background-color: var(--current-bg);
+    color: var(--current-fg);
+} */
 
 ul {
     list-style-type: disc !important;

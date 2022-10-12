@@ -2,6 +2,9 @@
 <html>
     <h3>Logseq Advanced Query Builder</h3>
     <small>v0.1</small>
+    <button id="light theme" class="btn btn-primary active" role="button" aria-pressed="true">Light Theme</button>
+    <button id="dark theme" class="btn btn-primary active" role="button" aria-pressed="true">Dark Theme</button>
+
     <!-- <div>
         <H3>TODO</H3>
         <ul>
@@ -51,7 +54,9 @@
     <body>
         <div style="width: 800px;">
             <div>
-                <i>An Experimental online tool to help Logseq Users build advanced queries from simple commands.</i><br><hr>
+                <i>An Experimental online tool to help Logseq Users build advanced queries from simple commands.</i>
+
+                <hr>
             </div>   
             <details  class="level1">
                 <summary>FAQ</summary>
@@ -241,22 +246,74 @@
 </body>
 <py-script output="print_output" src="logseqquerybuilder.py"></py-script>
 <script>
-        document.getElementById("commands_input").focus()
-
-        function copySummary(){
-            let summaryText = document.getElementById("advanced_query").innerText
-
-            navigator.clipboard.writeText(summaryText).then(function(){
-                console.log("Copied to clipboard!")
-            }, 
-                function(err){
-                    console.log("Could not copy text")
-                }
-            )
+    function isElectron() {
+        // Renderer process
+        if (typeof window !== 'undefined' && typeof window.process === 'object' && window.process.type === 'renderer') {
+            return true;
         }
+
+        // Main process
+        if (typeof process !== 'undefined' && typeof process.versions === 'object' && !!process.versions.electron) {
+            return true;
+        }
+
+        // Detect the user agent when the `nodeIntegration` option is set to true
+        if (typeof navigator === 'object' && typeof navigator.userAgent === 'string' && navigator.userAgent.indexOf('Electron') >= 0) {
+            return true;
+        }
+
+        return false;
+    }
+    
+    function copySummary(){
+        let summaryText = document.getElementById("advanced_query").innerText
+
+        navigator.clipboard.writeText(summaryText).then(function(){
+            console.log("Copied to clipboard!")
+        }, 
+            function(err){
+                console.log("Could not copy text")
+            }
+        )
+    }
+
+    document.getElementById("commands_input").focus()
 
         let copyButton = document.getElementById("copy");
         copyButton.addEventListener("click", copySummary);
+
+    </script>
+    <script>
+        
+        var r = document.querySelector(':root');
+
+        // Create a function for getting a variable value
+        function cssVar_get(cssvarname) {
+            // Get the styles (properties and values) for the root
+            var rs = getComputedStyle(r);
+            return rs.getPropertyValue(cssvarname);
+        }
+
+        function cssVar_set(bgcolor,fgcolor) {
+            r.style.setProperty('--current-bg', bgcolor);
+            r.style.setProperty('--current-fg', fgcolor);
+        }
+
+        function setLightTheme() {
+            cssVar_set(cssVar_get('--light-bg'),cssVar_get('--light-fg'));
+        }
+        
+        function setDarkTheme() {
+            cssVar_set(cssVar_get('--dark-bg'),cssVar_get('--dark-fg'));
+        }
+
+        let LightThemeButton = document.getElementById("light theme");
+        LightThemeButton.addEventListener("click", setLightTheme);
+
+        let DarkThemeButton = document.getElementById("dark theme");
+        DarkThemeButton.addEventListener("click", setDarkTheme);
+
+
 
     </script>
 </html>
