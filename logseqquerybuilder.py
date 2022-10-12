@@ -201,9 +201,6 @@ def processCommandLines(action, command, commandlines):
             if action == 'include':
                 firstline = '( or '
                 lastline = ")"
-            else:
-                firstline = '( and '
-                lastline = ")"
 
     if firstline != '':
         query['filters'].append(firstline)
@@ -589,8 +586,8 @@ def pyScriptInitialise():
 # mode global variable
 # for local testing set the mode to python
 # for web deployment set the mode to pyscript
-# mode = "python"
-mode = "pyScript"
+mode = "python"
+# mode = "pyScript"
 
 # toggle showing comments for each generated query line
 # showcommandcomments = True
@@ -613,9 +610,9 @@ if mode == "pyScript":
 print('Finished Loading .. You can now enter commands')
 
 # specific tests in local mode (python)
-# testQueryBuild("""title: pages command - specific pages
+# testQueryBuild("""title: blocks command - ignore blocks using wildcards
 # - pages
-#     - yourpagetitle1
-#     - yourpagetitle2
-#     - not fred
+#     - not starttext*
+#     - not *endtext
+#     - not *anytextanywhere*
 # """)

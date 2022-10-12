@@ -200,10 +200,8 @@ title: blocktags and pages command combined - test 3
 (page-ref ?block "tag1")
 (page-ref ?block "tag3")
 )
-( and 
 (not (page-ref ?block "tag2"))
 (not (page-ref ?block "tag4"))
-)
 ]
 }
 #+END_QUERY
