@@ -4,6 +4,11 @@ An Experimental online tool to help Logseq Users build advanced queries from <b>
 
 You can run this tool online at https://adxsoft.github.io/logseqadvancedquerybuilder/
 
+To include this tool in a logseq page use this line
+```html
+<iframe src="https://adxsoft.github.io/logseqadvancedquerybuilder/" allow="clipboard-read; clipboard-write" style="width: 100%; height: 1000px"></iframe>
+```
+
 See the FAQ for instructions and examples of how to use the tool
 
 ## Technical information
