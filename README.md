@@ -62,10 +62,8 @@ which will print the following advanced query that you can copy and paste (using
 (page-ref ?block "tag1")
 (page-ref ?block "tag3")
 )
-( and 
 (not (page-ref ?block "tag2"))
 (not (page-ref ?block "tag4"))
-)
 ]
 }
 #+END_QUERY
