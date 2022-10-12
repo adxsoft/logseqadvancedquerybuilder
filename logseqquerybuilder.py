@@ -587,8 +587,8 @@ def pyScriptInitialise():
 
 # for local testing or execution set the mode to python
 # for web deployment set the mode to pyscript
-mode = "python"
-# mode = "pyScript"
+# mode = "python"
+mode = "pyScript"
 
 # toggle showing comments for each generated query line
 # showcommandcomments = True

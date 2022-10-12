@@ -143,13 +143,12 @@ textarea {
 }
 
 .generatedquery {
-    color: rgb(7, 7, 0);
+    color: black;
     width: 400px;
     background-color: rgb(203, 241, 165);
     font-size: 0.8rem;
     font-weight: bold;
     font-family: 'Courier New', Courier, monospace;
-    padding: 1px 1px;
     text-align: left;
 }
 
