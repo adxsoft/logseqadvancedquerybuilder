@@ -23,6 +23,7 @@ query_template = {
     "closefind": [],
     "inputs": [],
     "view": [],
+    "options": [],
     "closequery": [],
 }
 
@@ -124,6 +125,14 @@ def processCommand(command, commandsDict):
         query['filters'].append(getQueryLine('journalfrom'))
         query['filters'].append(getQueryLine('journalto'))
         query['in'].append(getQueryLine('daterange'))
+    if command in ['collapse']:
+        query['options'].append(getQueryLine('collapse_true'))
+    if command in ['expand']:
+        query['options'].append(getQueryLine('collapse_false'))
+    if command in ['showbreadcrumb']:
+        query['options'].append(getQueryLine('breadcrumb_show_true'))
+    if command in ['hidebreadcrumb']:
+        query['options'].append(getQueryLine('breadcrumb_show_false'))
 
     # sort the argument lines by positive and negative
     positivecommandlines = []
@@ -611,9 +620,8 @@ if mode == "pyScript":
 print('Finished Loading .. You can now enter commands')
 
 # specific tests in local mode (python)
-# testQueryBuild("""title: blocks command - ignore blocks using wildcards
+# testQueryBuild("""title: show breadcrumbs
 # - pages
-#     - not starttext*
-#     - not *endtext
-#     - not *anytextanywhere*
+#     - *
+# - showbreadcrumb
 # """)

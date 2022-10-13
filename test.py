@@ -733,3 +733,91 @@ title: blockproperties - pagetype only
 """
         theresult = lqb.testQueryBuild(commands)
         self.assertEqual(lqb.testQueryBuild(commands), result)
+
+    def test_collapse(self):
+        commands = """title: collapse found blocks
+- pages
+    - *
+- collapse
+"""
+        result = """#+BEGIN_QUERY
+{
+:title [:b "collapse found blocks"]
+:query [:find (pull ?block [*])
+:where
+[?block :block/content ?blockcontent]
+[?block :block/page ?page]
+[?page :block/name ?pagename]
+]
+:collapsed? true
+}
+#+END_QUERY
+"""
+        theresult = lqb.testQueryBuild(commands)
+        self.assertEqual(lqb.testQueryBuild(commands), result)
+
+    def test_expand(self):
+        commands = """title: expand found blocks
+- pages
+    - *
+- expand
+"""
+        result = """#+BEGIN_QUERY
+{
+:title [:b "expand found blocks"]
+:query [:find (pull ?block [*])
+:where
+[?block :block/content ?blockcontent]
+[?block :block/page ?page]
+[?page :block/name ?pagename]
+]
+:collapsed? false
+}
+#+END_QUERY
+"""
+        theresult = lqb.testQueryBuild(commands)
+        self.assertEqual(lqb.testQueryBuild(commands), result)
+
+    def test_showbreadcrumb(self):
+        commands = """title: show breadcrumb for found blocks
+- pages
+    - *
+- showbreadcrumb
+"""
+        result = """#+BEGIN_QUERY
+{
+:title [:b "show breadcrumb for found blocks"]
+:query [:find (pull ?block [*])
+:where
+[?block :block/content ?blockcontent]
+[?block :block/page ?page]
+[?page :block/name ?pagename]
+]
+:breadcrumb-show? true
+}
+#+END_QUERY
+"""
+        theresult = lqb.testQueryBuild(commands)
+        self.assertEqual(lqb.testQueryBuild(commands), result)
+
+    def test_hidebreadcrumb(self):
+        commands = """title: hide breadcrumbs for found blocks
+- pages
+    - *
+- hidebreadcrumb
+"""
+        result = """#+BEGIN_QUERY
+{
+:title [:b "hide breadcrumbs for found blocks"]
+:query [:find (pull ?block [*])
+:where
+[?block :block/content ?blockcontent]
+[?block :block/page ?page]
+[?page :block/name ?pagename]
+]
+:breadcrumb-show? false
+}
+#+END_QUERY
+"""
+        theresult = lqb.testQueryBuild(commands)
+        self.assertEqual(lqb.testQueryBuild(commands), result)

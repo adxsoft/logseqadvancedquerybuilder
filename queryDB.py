@@ -343,13 +343,18 @@ querylineDict = {
         'datalog': ':breadcrumb-show? true',
         'comment': 'Show breadcrumbs above each block'
     },
-    'collapsed_false':
+    'collapse_false':
     {
         'name': 'collapsed_false',
-        'datalog': ' :collapsed? false',
+        'datalog': ':collapsed? false',
         'comment': 'Toggle collapse or fold'
     },
-    'closefind':
+    'collapse_true':
+    {
+        'name': 'collapsed_true',
+        'datalog': ':collapsed? true',
+        'comment': 'Toggle collapse or fold'
+    }, 'closefind':
     {
         'name': 'closefind',
         'datalog': ']',
@@ -454,5 +459,29 @@ commandsDict = {
             "scheduledbetween"
         ],
         "description": "select pages or blocks that are scheduled in a date range"
+    },
+    "collapse": {
+        "querylines":  [
+            "collapsed_true"
+        ],
+        "description": "collapse found blocks"
+    },
+    "expand": {
+        "querylines":  [
+            "collapsed_false"
+        ],
+        "description": "expand found blocks"
+    },
+    "showbreadcrumb": {
+        "querylines":  [
+            "breadcrumb_show_true"
+        ],
+        "description": "show breadcrumb for found blocks"
+    },
+    "hidebreadcrumb": {
+        "querylines":  [
+            "breadcrumb_show_false"
+        ],
+        "description": "hide breadcrumb for found blocks"
     },
 }
