@@ -4,9 +4,11 @@
 
 import logseqquerybuilder as lqb
 import unittest
+import QueryTestDB as td
+import sys
 
 
-class Test_pages_command(unittest.TestCase):
+class Test_manual_tests(unittest.TestCase):
 
     # ------------------------------------
     def test_pages1(self):
@@ -45,12 +47,13 @@ class Test_pages_command(unittest.TestCase):
 [?block :block/content ?blockcontent]
 [?block :block/page ?page]
 [?page :block/name ?pagename]
-( or 
+( or
 [(clojure.string/starts-with? ?pagename "abc")]
 [(clojure.string/includes? ?pagename "de")]
 )
 (not [(clojure.string/starts-with? ?pagename "2")])
 ]
+}
 #+END_QUERY
 """
 
@@ -821,3 +824,289 @@ title: blockproperties - pagetype only
 """
         theresult = lqb.testQueryBuild(commands)
         self.assertEqual(lqb.testQueryBuild(commands), result)
+
+
+# Automated Tests
+class Test_Automated_Tests(unittest.TestCase):
+    # Uses test data from the QueryTestDB module
+    # Each test is numbered from 1 to the number of tests in QueryTestDB.py
+
+    def test_1(self):
+        functionname = sys._getframe().f_code.co_name
+        testno = int(functionname.split("_")[1])-1
+        print('test no '+str(testno)+' - ' +
+              td.QueryTestCases[testno]['commands'][0])
+        commands = '\n'.join(td.QueryTestCases[testno]['commands'])
+        expectedresult = td.QueryTestCases[testno]['query']
+        theresult = lqb.testQueryBuild(commands)
+        self.assertEqual(theresult, expectedresult)
+
+    def test_2(self):
+        functionname = sys._getframe().f_code.co_name
+        testno = int(functionname.split("_")[1])-1
+        print('test no '+str(testno)+' - ' +
+              td.QueryTestCases[testno]['commands'][0])
+        commands = '\n'.join(td.QueryTestCases[testno]['commands'])
+        expectedresult = td.QueryTestCases[testno]['query']
+        theresult = lqb.testQueryBuild(commands)
+        self.assertEqual(theresult, expectedresult)
+
+    def test_3(self):
+        functionname = sys._getframe().f_code.co_name
+        testno = int(functionname.split("_")[1])-1
+        print('test no '+str(testno)+' - ' +
+              td.QueryTestCases[testno]['commands'][0])
+        commands = '\n'.join(td.QueryTestCases[testno]['commands'])
+        expectedresult = td.QueryTestCases[testno]['query']
+        theresult = lqb.testQueryBuild(commands)
+        self.assertEqual(theresult, expectedresult)
+
+    def test_4(self):
+        functionname = sys._getframe().f_code.co_name
+        testno = int(functionname.split("_")[1])-1
+        print('test no '+str(testno)+' - ' +
+              td.QueryTestCases[testno]['commands'][0])
+        commands = '\n'.join(td.QueryTestCases[testno]['commands'])
+        expectedresult = td.QueryTestCases[testno]['query']
+        theresult = lqb.testQueryBuild(commands)
+        self.assertEqual(theresult, expectedresult)
+
+    def test_5(self):
+        functionname = sys._getframe().f_code.co_name
+        testno = int(functionname.split("_")[1])-1
+        print('test no '+str(testno)+' - ' +
+              td.QueryTestCases[testno]['commands'][0])
+        commands = '\n'.join(td.QueryTestCases[testno]['commands'])
+        expectedresult = td.QueryTestCases[testno]['query']
+        theresult = lqb.testQueryBuild(commands)
+        self.assertEqual(theresult, expectedresult)
+
+    def test_6(self):
+        functionname = sys._getframe().f_code.co_name
+        testno = int(functionname.split("_")[1])-1
+        print('test no '+str(testno)+' - ' +
+              td.QueryTestCases[testno]['commands'][0])
+        commands = '\n'.join(td.QueryTestCases[testno]['commands'])
+        expectedresult = td.QueryTestCases[testno]['query']
+        theresult = lqb.testQueryBuild(commands)
+        self.assertEqual(theresult, expectedresult)
+
+    def test_7(self):
+        functionname = sys._getframe().f_code.co_name
+        testno = int(functionname.split("_")[1])-1
+        print('test no '+str(testno)+' - ' +
+              td.QueryTestCases[testno]['commands'][0])
+        commands = '\n'.join(td.QueryTestCases[testno]['commands'])
+        expectedresult = td.QueryTestCases[testno]['query']
+        theresult = lqb.testQueryBuild(commands)
+        self.assertEqual(theresult, expectedresult)
+
+    def test_8(self):
+        functionname = sys._getframe().f_code.co_name
+        testno = int(functionname.split("_")[1])-1
+        print('test no '+str(testno)+' - ' +
+              td.QueryTestCases[testno]['commands'][0])
+        commands = '\n'.join(td.QueryTestCases[testno]['commands'])
+        expectedresult = td.QueryTestCases[testno]['query']
+        theresult = lqb.testQueryBuild(commands)
+        self.assertEqual(theresult, expectedresult)
+
+    def test_9(self):
+        functionname = sys._getframe().f_code.co_name
+        testno = int(functionname.split("_")[1])-1
+        print('test no '+str(testno)+' - ' +
+              td.QueryTestCases[testno]['commands'][0])
+        commands = '\n'.join(td.QueryTestCases[testno]['commands'])
+        expectedresult = td.QueryTestCases[testno]['query']
+        theresult = lqb.testQueryBuild(commands)
+        self.assertEqual(theresult, expectedresult)
+
+    def test_10(self):
+        functionname = sys._getframe().f_code.co_name
+        testno = int(functionname.split("_")[1])-1
+        print('test no '+str(testno)+' - ' +
+              td.QueryTestCases[testno]['commands'][0])
+        commands = '\n'.join(td.QueryTestCases[testno]['commands'])
+        expectedresult = td.QueryTestCases[testno]['query']
+        theresult = lqb.testQueryBuild(commands)
+        self.assertEqual(theresult, expectedresult)
+
+    def test_11(self):
+        functionname = sys._getframe().f_code.co_name
+        testno = int(functionname.split("_")[1])-1
+        print('test no '+str(testno)+' - ' +
+              td.QueryTestCases[testno]['commands'][0])
+        commands = '\n'.join(td.QueryTestCases[testno]['commands'])
+        expectedresult = td.QueryTestCases[testno]['query']
+        theresult = lqb.testQueryBuild(commands)
+        self.assertEqual(theresult, expectedresult)
+
+    def test_12(self):
+        functionname = sys._getframe().f_code.co_name
+        testno = int(functionname.split("_")[1])-1
+        print('test no '+str(testno)+' - ' +
+              td.QueryTestCases[testno]['commands'][0])
+        commands = '\n'.join(td.QueryTestCases[testno]['commands'])
+        expectedresult = td.QueryTestCases[testno]['query']
+        theresult = lqb.testQueryBuild(commands)
+        self.assertEqual(theresult, expectedresult)
+
+    def test_13(self):
+        functionname = sys._getframe().f_code.co_name
+        testno = int(functionname.split("_")[1])-1
+        print('test no '+str(testno)+' - ' +
+              td.QueryTestCases[testno]['commands'][0])
+        commands = '\n'.join(td.QueryTestCases[testno]['commands'])
+        expectedresult = td.QueryTestCases[testno]['query']
+        theresult = lqb.testQueryBuild(commands)
+        self.assertEqual(theresult, expectedresult)
+
+    def test_14(self):
+        functionname = sys._getframe().f_code.co_name
+        testno = int(functionname.split("_")[1])-1
+        print('test no '+str(testno)+' - ' +
+              td.QueryTestCases[testno]['commands'][0])
+        commands = '\n'.join(td.QueryTestCases[testno]['commands'])
+        expectedresult = td.QueryTestCases[testno]['query']
+        theresult = lqb.testQueryBuild(commands)
+        self.assertEqual(theresult, expectedresult)
+
+    def test_15(self):
+        functionname = sys._getframe().f_code.co_name
+        testno = int(functionname.split("_")[1])-1
+        print('test no '+str(testno)+' - ' +
+              td.QueryTestCases[testno]['commands'][0])
+        commands = '\n'.join(td.QueryTestCases[testno]['commands'])
+        expectedresult = td.QueryTestCases[testno]['query']
+        theresult = lqb.testQueryBuild(commands)
+        self.assertEqual(theresult, expectedresult)
+
+    def test_16(self):
+        functionname = sys._getframe().f_code.co_name
+        testno = int(functionname.split("_")[1])-1
+        print('test no '+str(testno)+' - ' +
+              td.QueryTestCases[testno]['commands'][0])
+        commands = '\n'.join(td.QueryTestCases[testno]['commands'])
+        expectedresult = td.QueryTestCases[testno]['query']
+        theresult = lqb.testQueryBuild(commands)
+        self.assertEqual(theresult, expectedresult)
+
+    def test_17(self):
+        functionname = sys._getframe().f_code.co_name
+        testno = int(functionname.split("_")[1])-1
+        print('test no '+str(testno)+' - ' +
+              td.QueryTestCases[testno]['commands'][0])
+        commands = '\n'.join(td.QueryTestCases[testno]['commands'])
+        expectedresult = td.QueryTestCases[testno]['query']
+        theresult = lqb.testQueryBuild(commands)
+        self.assertEqual(theresult, expectedresult)
+
+    def test_18(self):
+        functionname = sys._getframe().f_code.co_name
+        testno = int(functionname.split("_")[1])-1
+        print('test no '+str(testno)+' - ' +
+              td.QueryTestCases[testno]['commands'][0])
+        commands = '\n'.join(td.QueryTestCases[testno]['commands'])
+        expectedresult = td.QueryTestCases[testno]['query']
+        theresult = lqb.testQueryBuild(commands)
+        self.assertEqual(theresult, expectedresult)
+
+    def test_19(self):
+        functionname = sys._getframe().f_code.co_name
+        testno = int(functionname.split("_")[1])-1
+        print('test no '+str(testno)+' - ' +
+              td.QueryTestCases[testno]['commands'][0])
+        commands = '\n'.join(td.QueryTestCases[testno]['commands'])
+        expectedresult = td.QueryTestCases[testno]['query']
+        theresult = lqb.testQueryBuild(commands)
+        self.assertEqual(theresult, expectedresult)
+
+    def test_20(self):
+        functionname = sys._getframe().f_code.co_name
+        testno = int(functionname.split("_")[1])-1
+        print('test no '+str(testno)+' - ' +
+              td.QueryTestCases[testno]['commands'][0])
+        commands = '\n'.join(td.QueryTestCases[testno]['commands'])
+        expectedresult = td.QueryTestCases[testno]['query']
+        theresult = lqb.testQueryBuild(commands)
+        self.assertEqual(theresult, expectedresult)
+
+    def test_21(self):
+        functionname = sys._getframe().f_code.co_name
+        testno = int(functionname.split("_")[1])-1
+        print('test no '+str(testno)+' - ' +
+              td.QueryTestCases[testno]['commands'][0])
+        commands = '\n'.join(td.QueryTestCases[testno]['commands'])
+        expectedresult = td.QueryTestCases[testno]['query']
+        theresult = lqb.testQueryBuild(commands)
+        self.assertEqual(theresult, expectedresult)
+
+    def test_22(self):
+        functionname = sys._getframe().f_code.co_name
+        testno = int(functionname.split("_")[1])-1
+        print('test no '+str(testno)+' - ' +
+              td.QueryTestCases[testno]['commands'][0])
+        commands = '\n'.join(td.QueryTestCases[testno]['commands'])
+        expectedresult = td.QueryTestCases[testno]['query']
+        theresult = lqb.testQueryBuild(commands)
+        self.assertEqual(theresult, expectedresult)
+
+    def test_23(self):
+        functionname = sys._getframe().f_code.co_name
+        testno = int(functionname.split("_")[1])-1
+        print('test no '+str(testno)+' - ' +
+              td.QueryTestCases[testno]['commands'][0])
+        commands = '\n'.join(td.QueryTestCases[testno]['commands'])
+        expectedresult = td.QueryTestCases[testno]['query']
+        theresult = lqb.testQueryBuild(commands)
+        self.assertEqual(theresult, expectedresult)
+
+    def test_24(self):
+        functionname = sys._getframe().f_code.co_name
+        testno = int(functionname.split("_")[1])-1
+        print('test no '+str(testno)+' - ' +
+              td.QueryTestCases[testno]['commands'][0])
+        commands = '\n'.join(td.QueryTestCases[testno]['commands'])
+        expectedresult = td.QueryTestCases[testno]['query']
+        theresult = lqb.testQueryBuild(commands)
+        self.assertEqual(theresult, expectedresult)
+
+    def test_25(self):
+        functionname = sys._getframe().f_code.co_name
+        testno = int(functionname.split("_")[1])-1
+        print('test no '+str(testno)+' - ' +
+              td.QueryTestCases[testno]['commands'][0])
+        commands = '\n'.join(td.QueryTestCases[testno]['commands'])
+        expectedresult = td.QueryTestCases[testno]['query']
+        theresult = lqb.testQueryBuild(commands)
+        self.assertEqual(theresult, expectedresult)
+
+    def test_26(self):
+        functionname = sys._getframe().f_code.co_name
+        testno = int(functionname.split("_")[1])-1
+        print('test no '+str(testno)+' - ' +
+              td.QueryTestCases[testno]['commands'][0])
+        commands = '\n'.join(td.QueryTestCases[testno]['commands'])
+        expectedresult = td.QueryTestCases[testno]['query']
+        theresult = lqb.testQueryBuild(commands)
+        self.assertEqual(theresult, expectedresult)
+
+    def test_27(self):
+        functionname = sys._getframe().f_code.co_name
+        testno = int(functionname.split("_")[1])-1
+        print('test no '+str(testno)+' - ' +
+              td.QueryTestCases[testno]['commands'][0])
+        commands = '\n'.join(td.QueryTestCases[testno]['commands'])
+        expectedresult = td.QueryTestCases[testno]['query']
+        theresult = lqb.testQueryBuild(commands)
+        self.assertEqual(theresult, expectedresult)
+
+    def test_28(self):
+        functionname = sys._getframe().f_code.co_name
+        testno = int(functionname.split("_")[1])-1
+        print('test no '+str(testno)+' - ' +
+              td.QueryTestCases[testno]['commands'][0])
+        commands = '\n'.join(td.QueryTestCases[testno]['commands'])
+        expectedresult = td.QueryTestCases[testno]['query']
+        theresult = lqb.testQueryBuild(commands)
+        self.assertEqual(theresult, expectedresult)
