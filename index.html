@@ -52,7 +52,7 @@
     
     
     <body>
-        <div style="width: 800px;">
+        <div>
             <div>
                 <i>An Experimental online tool to help Logseq Users build advanced queries from simple commands.</i>
 
@@ -189,13 +189,13 @@
                 </div>
             <hr>
         </div>
-        <h5>Command Input</h5>
+        <h3>Command Input</h3>
         <select id="command_examples">
             <option value='' selected>Choose Example..</option>
             <option value='title: pages command - pages by wildcards&#10- pages&#10    - *'>pages - select all pages</option>
             <option value='title: pages command - specific pages&#10- pages&#10    - yourpagetitle1&#10    - yourpagetitle2'>pages - select specific pages</option>
             <option value='title: pages command - pages by wildcards&#10- pages&#10    - starttext*&#10    - *endtext&#10    - *anytextanywhere*'>pages - using wildcards (*)</option>
-            <option value='title: pages command - ignore pages (including wildcards)&#10- pages&#10    - not yourpagetitle1&#10    - not yourpagetitle2    - not mypage*&#10    - not starttext*&#10    - not *endtext&#10    - not *anytextanywhere*'>pages - ignore various pages</option>
+            <option value='title: pages command - ignore pages (including wildcards)&#10- pages&#10    - not yourpagetitle1&#10    - not yourpagetitle2&#10    - not mypage*&#10    - not starttext*&#10    - not *endtext&#10    - not *anytextanywhere*'>pages - ignore various pages</option>
             <option value='title: blocks command - ignore blocks using wildcards&#10- pages&#10    - not starttext*&#10    - not *endtext&#10    - not *anytextanywhere*'>blocks - by wildcards</option>
             <option value='title: blocktags - select and exclude block level tags&#10- blocktags&#10    - tag1&#10    - tag2&#10    - not tag3'>blocktags - select and exclude block level tags</option>
             <option value='title: blocktags and pages example&#10- pages&#10    - starttext*&#10    - *endtext&#10    - *anytextanywhere*&#10    - not pagetitle1&#10- blocktags&#10    - tag1&#10    - tag2&#10    - not tag3'>blocktags and pages</option>
@@ -219,7 +219,7 @@
             <option value='- showbreadcrumb'>showbreadcrumb - show breadcrumbs for all found blockss</option>
             <option value='- hidebreadcrumb'>hidebreadcrumb - hide breadcrumbs for all found blockss</option>
             
-                    </select>
+                                </select>
         <br>
         <p>
             <pre><textarea id="commands_input" rows="10" cols="50">
@@ -228,7 +228,7 @@
             <p>
             <button id="clear_commands_button" type="button">Clear</button>
         <hr>
-        <h5>Generated Query</h5>
+        <h3>Generated Query</h3>
         <div class="checkbox">
             <input id='command_comments_checkbox' type="checkbox" style="margin-right:10px;" value="unchecked">Include Query Comments
             <input id='codeblock_checkbox' type="checkbox" style="margin-right:10px; margin-left:10px;" value="unchecked">Copy as code block<p>

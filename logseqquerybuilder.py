@@ -16,7 +16,7 @@ query_template = {
     "start": [],
     "open": [],
     "title": [],
-    "query": [],
+    "query": [],  # unused segment
     "in": [],
     "where": [],
     "filters": [],
@@ -25,11 +25,15 @@ query_template = {
     "view": [],
     "options": [],
     "closequery": [],
+    "end": []
 }
 
 
-def getQueryLine(querylinekey):
+def getQueryLine(querylinekey, querysegment):
+    global showcommandcomments
     try:
+        if showcommandcomments == True:
+            query[querysegment].append('\n'+getQueryLineComment(querylinekey))
         return querylineDict[querylinekey]['datalog']
     except:
         return querylinekey+" not found in queryline Dictionary"
@@ -61,11 +65,10 @@ def getCommandQueryLineKeys(command):
 
 
 def buildCommonQueryLines():
+    global showcommandcomments
     for key in defaultQueryLines:
         for querylinekey in defaultQueryLines[key]:
-            if showcommandcomments == True:
-                query[key].append('\n'+getQueryLineComment(querylinekey))
-            query[key].append(getQueryLine(querylinekey))
+            query[key].append(getQueryLine(querylinekey, key))
 
     return
 
@@ -102,37 +105,39 @@ def processCommand(command, commandsDict):
 
     # command pre-processing
     if command in ['journalonly']:
-        query['filters'].append(getQueryLine('page_is_journal'))
+        query['filters'].append(getQueryLine('page_is_journal', 'filters'))
     if command in ['tasks']:
-        query['filters'].append(getQueryLine('marker'))
+        query['filters'].append(getQueryLine('marker', 'filters'))
     if command in ['scheduled']:
-        query['filters'].append(getQueryLine('scheduled'))
+        query['filters'].append(getQueryLine('scheduled', 'filters'))
     if command in ['deadline']:
-        query['filters'].append(getQueryLine('deadline'))
+        query['filters'].append(getQueryLine('deadline', 'filters'))
     if command in ['scheduledbetween']:
-        query['filters'].append(getQueryLine('scheduled'))
-        query['filters'].append(getQueryLine('scheduledfrom'))
-        query['filters'].append(getQueryLine('scheduledto'))
-        query['in'].append(getQueryLine('daterange'))
+        query['filters'].append(getQueryLine('scheduled', 'filters'))
+        query['filters'].append(getQueryLine('scheduledfrom', 'filters'))
+        query['filters'].append(getQueryLine('scheduledto', 'filters'))
+        query['in'].append(getQueryLine('daterange', 'in'))
     if command in ['deadlinebetween']:
-        query['filters'].append(getQueryLine('deadline'))
-        query['filters'].append(getQueryLine('deadlinefrom'))
-        query['filters'].append(getQueryLine('deadlineto'))
-        query['in'].append(getQueryLine('daterange'))
+        query['filters'].append(getQueryLine('deadline', 'filters'))
+        query['filters'].append(getQueryLine('deadlinefrom', 'filters'))
+        query['filters'].append(getQueryLine('deadlineto', 'filters'))
+        query['in'].append(getQueryLine('daterange', 'in'))
     if command in ['journalsbetween']:
-        query['filters'].append(getQueryLine('page_is_journal'))
-        query['filters'].append(getQueryLine('journal_date'))
-        query['filters'].append(getQueryLine('journalfrom'))
-        query['filters'].append(getQueryLine('journalto'))
-        query['in'].append(getQueryLine('daterange'))
+        query['filters'].append(getQueryLine('page_is_journal', 'filters'))
+        query['filters'].append(getQueryLine('journal_date', 'filters'))
+        query['filters'].append(getQueryLine('journalfrom', 'filters'))
+        query['filters'].append(getQueryLine('journalto', 'filters'))
+        query['in'].append(getQueryLine('daterange', 'in'))
     if command in ['collapse']:
-        query['options'].append(getQueryLine('collapse_true'))
+        query['options'].append(getQueryLine('collapse_true', 'options'))
     if command in ['expand']:
-        query['options'].append(getQueryLine('collapse_false'))
+        query['options'].append(getQueryLine('collapse_false', 'options'))
     if command in ['showbreadcrumb']:
-        query['options'].append(getQueryLine('breadcrumb_show_true'))
+        query['options'].append(getQueryLine(
+            'breadcrumb_show_true', 'options'))
     if command in ['hidebreadcrumb']:
-        query['options'].append(getQueryLine('breadcrumb_show_false'))
+        query['options'].append(getQueryLine(
+            'breadcrumb_show_false', 'options'))
 
     # sort the argument lines by positive and negative
     positivecommandlines = []
@@ -156,17 +161,13 @@ def addQueryLines(command, prefix, querylinekey, arg, querysegment):
     global showcommandcomments
     global mode
 
-    if showcommandcomments == True:
-        query[querysegment].append(
-            '\n'+getQueryLineComment(prefix+querylinekey))
-
     args = arg.split(",")
 
     # single argument commands
     if len(args) == 1:
         querylinekey = prefix+querylinekey
         updatedqueryline = getQueryLine(
-            querylinekey).replace("$$ARG1", arg)
+            querylinekey, querysegment).replace("$$ARG1", arg)
         query[querysegment].append(updatedqueryline)
 
     # double argument commands
@@ -175,7 +176,7 @@ def addQueryLines(command, prefix, querylinekey, arg, querysegment):
         arg2 = args[1].strip()
         querylinekey = prefix+querylinekey
         updatedqueryline = getQueryLine(
-            querylinekey).replace("$$ARG1", arg1)
+            querylinekey, querysegment).replace("$$ARG1", arg1)
         updatedqueryline = updatedqueryline.replace(
             '$$ARG2', arg2)
         query[querysegment].append(updatedqueryline)
@@ -354,7 +355,7 @@ def processCommandList(commandlists):
         if line.strip() == '' or line.startswith(";;"):
             continue
         if line.startswith('title:'):
-            query["title"].append(getQueryLine('title').replace(
+            query["title"].append(getQueryLine('title', 'title').replace(
                 '$$ARG1', line.split(":")[1].strip()))
             continue
         if line.startswith('- '):  # encountered a command
@@ -371,18 +372,18 @@ def processCommandList(commandlists):
             # can occur if bad command data in command input text
             pass
 
-    query['start'] = [getQueryLine('start')]
-    query['open'] = [getQueryLine('open')]
+    query['start'] = [getQueryLine('start', 'start')]
+    query['open'] = [getQueryLine('open', 'open')]
 
     buildCommonQueryLines()
 
     for command in commandsDict:
         processCommand(command, commandsDict)
 
-    query['closefind'] = [getQueryLine('closefind')]
+    query['closefind'] = [getQueryLine('closefind', 'closefind')]
     # finalise query segments
-    query['closequery'] = [getQueryLine('closequery')]
-    query['end'] = [getQueryLine('end')]
+    query['closequery'] = [getQueryLine('closequery', 'closequery')]
+    query['end'] = [getQueryLine('end', 'end')]
 
     return
 
@@ -620,8 +621,17 @@ if mode == "pyScript":
 print('Finished Loading .. You can now enter commands')
 
 # specific tests in local mode (python)
-# testQueryBuild("""title: show breadcrumbs
+# testQueryBuild("""- journalsbetween
+#     - :today :30d-after
+# """)
+
+# testQueryBuild("""title: fred nerk
 # - pages
-#     - *
-# - showbreadcrumb
+#     - test*
+# - tags
+#     - ABC
+#     - DEF
+# - blockproperties
+#     - p-major "jimbo"
+
 # """)

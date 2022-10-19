@@ -60,7 +60,7 @@ a {
 
 h3 {
     font-family: 'Roboto', sans-serif;
-    font-size: 1.25rem;
+    font-size: 1.1rem;
     color: var(--current-fg);
 }
 
@@ -118,14 +118,14 @@ hr {
 button {
     font-size: 0.9rem;
     padding: 3px 3px;
-    background-color: antiquewhite;
+    background-color: rgb(215, 210, 206);
     border-radius: 6px;
 }
 
 select {
     font-size: 0.8rem;
     padding: 1px 1px;
-    width: 400px;
+    width: 25rem;
     background-color: #00384d;
     color: white;
     text-align: center;
@@ -133,7 +133,7 @@ select {
 
 textarea {
     color: rgb(7, 7, 0);
-    width: 400px;
+    width: 25rem;
     background-color: rgb(243, 239, 136);
     font-size: 0.8rem;
     font-weight: bold;
@@ -144,7 +144,7 @@ textarea {
 
 .generatedquery {
     color: black;
-    width: 400px;
+    width: 25rem;
     background-color: rgb(203, 241, 165);
     font-size: 0.8rem;
     font-weight: bold;
