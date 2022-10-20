@@ -11,6 +11,8 @@ To include this tool in a logseq page use this line
 
 See the FAQ for instructions and examples of how to use the tool
 
+Also see https://github.com/adxsoft/buildlogseqtestgraph for building a test graph to checkout the advanced queries you build with this tool
+
 ## Technical information
 The tool is built in python 3 and uses pyscript (https://pyscript.net/) for the web user interface.
 
