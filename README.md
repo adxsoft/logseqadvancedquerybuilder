@@ -43,8 +43,6 @@ testQueryBuild("""title: blocktags and pages command combined - test 3
     - not tag4
 """)
 ```
-3. To run the unit tests you must do step 1 above and then run *test.py*
-
 which will print the following advanced query that you can copy and paste (using Cmd/Ctrl Shift V) directly into Logseq
 
 ```clojure
@@ -71,4 +69,6 @@ which will print the following advanced query that you can copy and paste (using
 }
 #+END_QUERY
 ```
+3. To run the unit tests you must do step 1 above and then run *test.py*
+
 
