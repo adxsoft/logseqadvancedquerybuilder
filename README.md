@@ -2,6 +2,8 @@
 
 An Experimental online tool to help Logseq Users build advanced queries from <b><i>simple</i></b> commands.
 
+**Updated 5th Nov 2022 see Releases section below**
+
 You can run this tool online at https://adxsoft.github.io/logseqadvancedquerybuilder/
 
 To include this tool in a logseq page use this line
@@ -71,4 +73,12 @@ which will print the following advanced query that you can copy and paste (using
 ```
 3. To run the unit tests you must do step 1 above and then run *test.py*
 
-
+# Releases
+_Version 0.1_
+- Original release Oct 2022
+_Version 0.2_
+- clarify pages retrieval vs blocks retrieval in FAQ, Simple Commands
+- Force user to choose either pages or block retrieval, Default to block retrieval
+- improved error messaging
+- improved descriptions for the generated advanced query lines
+- bug fixes
