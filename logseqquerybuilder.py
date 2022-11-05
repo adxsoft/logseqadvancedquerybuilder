@@ -5,6 +5,17 @@ import copy
 import time
 
 
+def initialisteQueryLineDict():
+    # merge common querylines into pages group and the blocks group
+    tempDict = {}
+    tempDict['pages-querylines'] = querylineDict['pages-querylines']
+    tempDict['blocks-querylines'] = querylineDict['blocks-querylines']
+    for commonqueryline in querylineDict['common-querylines']:
+        tempDict['pages-querylines'][commonqueryline] = querylineDict['common-querylines'][commonqueryline]
+        tempDict['blocks-querylines'][commonqueryline] = querylineDict['common-querylines'][commonqueryline]
+    return tempDict
+
+
 def initialiseQuery():
     global query_template
     query = copy.deepcopy(query_template)
@@ -14,9 +25,10 @@ def initialiseQuery():
 # query structure
 query_template = {
     "start": [],
+    "errors": [],
     "open": [],
     "title": [],
-    "query": [],  # unused segment
+    "query": [],
     "in": [],
     "where": [],
     "filters": [],
@@ -29,18 +41,38 @@ query_template = {
 }
 
 
+def getQueryLineSegment(querylinekey):
+    try:
+        return ['ok', querylineDBDict[querygroup][querylinekey]['segment']]
+    except:
+        errortext = querylinekey+' segment value not found in QueryDB\n'
+        errormsg = ';; **ERROR: '+errortext+'\n'
+        return ['error', errormsg]
+
+
 def getQueryLine(querylinekey, querysegment):
     global showcommandcomments
+    global querygroup
     try:
         if showcommandcomments == True:
-            query[querysegment].append('\n'+getQueryLineComment(querylinekey))
-        return querylineDict[querylinekey]['datalog']
+            query[querysegment].append(
+                '\n'+getQueryLineComment(querylinekey))
+        return querylineDBDict[querygroup][querylinekey]['datalog']
     except:
-        return querylinekey+" not found in queryline Dictionary"
+        errormsg = '\n---- COMMAND ERROR ----\n'
+        errormsg += querylinekey+' not found in QueryDB or invalid usage\n'
+        if querygroup == 'pages-querylines':
+            errormsg += querylinekey+" invalid within a 'pages' command query"
+        if querygroup == 'blocks-querylines':
+            errormsg += querylinekey+" invalid within a 'blocks' command query"
+        errormsg += '\n----------------------\n'
+
+        return errormsg
 
 
 def getQueryLineComment(querylinekey):
-    comment = querylineDict[querylinekey]['comment']
+    global querygroup
+    comment = querylineDBDict[querygroup][querylinekey]['comment']
     if mode == 'pyScript':
         separator = "<p>"
         comment = comment.replace('\n', '<p>')
@@ -53,6 +85,7 @@ def getQueryLineComment(querylinekey):
 
 
 def getCommandQueryLineKeys(command):
+    global querygroup
     if command == None:
         return None
     # check command in Dictionary
@@ -65,11 +98,6 @@ def getCommandQueryLineKeys(command):
 
 
 def buildCommonQueryLines():
-    global showcommandcomments
-    for key in defaultQueryLines:
-        for querylinekey in defaultQueryLines[key]:
-            query[key].append(getQueryLine(querylinekey, key))
-
     return
 
 
@@ -85,6 +113,12 @@ def processCommand(command, commandsDict):
     # ------------------------------------------------------------------
     # -- Construct the common (minimum) query lines for all queries ----
     # ------------------------------------------------------------------
+
+    commandvalidity = checkCommandValid(command)
+
+    if commandvalidity[0] == False:
+        query['errors'].append(commandvalidity[1])
+        return
 
     # get the basic advanced query lines for this command
 
@@ -102,42 +136,23 @@ def processCommand(command, commandsDict):
     # --    and the negative (not)query lines are in the 2nd group  ----
     # --    which are conecutive and there have an implied AND      ----
     # ------------------------------------------------------------------
+    for key in querylinekeys:
+        querysegmentresponse = getQueryLineSegment(key)[0]
+        querysegmentdata = getQueryLineSegment(key)[1]
+        if querysegmentresponse == 'error':
+            query['errors'].append(querysegmentdata)
+            continue
 
-    # command pre-processing
-    if command in ['journalonly']:
-        query['filters'].append(getQueryLine('page_is_journal', 'filters'))
-    if command in ['tasks']:
-        query['filters'].append(getQueryLine('marker', 'filters'))
-    if command in ['scheduled']:
-        query['filters'].append(getQueryLine('scheduled', 'filters'))
-    if command in ['deadline']:
-        query['filters'].append(getQueryLine('deadline', 'filters'))
-    if command in ['scheduledbetween']:
-        query['filters'].append(getQueryLine('scheduled', 'filters'))
-        query['filters'].append(getQueryLine('scheduledfrom', 'filters'))
-        query['filters'].append(getQueryLine('scheduledto', 'filters'))
-        query['in'].append(getQueryLine('daterange', 'in'))
-    if command in ['deadlinebetween']:
-        query['filters'].append(getQueryLine('deadline', 'filters'))
-        query['filters'].append(getQueryLine('deadlinefrom', 'filters'))
-        query['filters'].append(getQueryLine('deadlineto', 'filters'))
-        query['in'].append(getQueryLine('daterange', 'in'))
-    if command in ['journalsbetween']:
-        query['filters'].append(getQueryLine('page_is_journal', 'filters'))
-        query['filters'].append(getQueryLine('journal_date', 'filters'))
-        query['filters'].append(getQueryLine('journalfrom', 'filters'))
-        query['filters'].append(getQueryLine('journalto', 'filters'))
-        query['in'].append(getQueryLine('daterange', 'in'))
-    if command in ['collapse']:
-        query['options'].append(getQueryLine('collapse_true', 'options'))
-    if command in ['expand']:
-        query['options'].append(getQueryLine('collapse_false', 'options'))
-    if command in ['showbreadcrumb']:
-        query['options'].append(getQueryLine(
-            'breadcrumb_show_true', 'options'))
-    if command in ['hidebreadcrumb']:
-        query['options'].append(getQueryLine(
-            'breadcrumb_show_false', 'options'))
+        querysegment = querysegmentdata
+        queryline = getQueryLine(key, querysegment)
+
+        # avoid duplications
+        if queryline in query[querysegment]:
+            continue
+
+# TODO: BUG Why does tasks on its own put contains in TWICE!!!!
+        # update the query with the query line
+        query[querysegment].append(queryline)
 
     # sort the argument lines by positive and negative
     positivecommandlines = []
@@ -150,16 +165,49 @@ def processCommand(command, commandsDict):
             positivecommandlines.append(commandline)
 
     # get the command lines that are grouped positively
-    processCommandLines('include', command, positivecommandlines)
-    processCommandLines('exclude', command, negativecommandlines)
+    if len(positivecommandlines) > 0:
+        processCommandLines('include', command, positivecommandlines)
+    if len(negativecommandlines) > 0:
+        processCommandLines('exclude', command, negativecommandlines)
 
     return
 
 
-def addQueryLines(command, prefix, querylinekey, arg, querysegment):
+def checkCommandValid(command):
+    commandvalidity = True  # default
+    errormessage = ''
+    if querygroup == 'pages-querylines':
+        if command == 'blocktags':
+            commandvalidity = False
+            errormessage = '\n;; **ERROR: '+command + \
+                ' not valid with pages command use blocks command instead\n'
+        elif command == 'tasks':
+            commandvalidity = False
+            errormessage = '\n;; **ERROR: '+command + \
+                ' not valid with pages command use blocks command instead\n'
+
+    elif querygroup == 'blocks-querylines':
+        if command in [
+
+        ]:
+            commandvalidity = False
+
+    return [commandvalidity, errormessage]
+
+
+def addQueryLines(command, prefix, querylinekey, arg):
     global query
     global showcommandcomments
     global mode
+
+    querysegment = getQueryLineSegment(querylinekey)
+    querysegmentresponse = getQueryLineSegment(querylinekey)[0]
+    querysegmentdata = getQueryLineSegment(querylinekey)[1]
+    if querysegmentresponse == 'error':
+        query['errors'].append(querysegmentdata)
+        return
+
+    querysegment = querysegmentdata
 
     args = arg.split(",")
 
@@ -168,7 +216,8 @@ def addQueryLines(command, prefix, querylinekey, arg, querysegment):
         querylinekey = prefix+querylinekey
         updatedqueryline = getQueryLine(
             querylinekey, querysegment).replace("$$ARG1", arg)
-        query[querysegment].append(updatedqueryline)
+        if not updatedqueryline in query[querysegment]:
+            query[querysegment].append(updatedqueryline)
 
     # double argument commands
     elif len(args) == 2:
@@ -179,7 +228,8 @@ def addQueryLines(command, prefix, querylinekey, arg, querysegment):
             querylinekey, querysegment).replace("$$ARG1", arg1)
         updatedqueryline = updatedqueryline.replace(
             '$$ARG2', arg2)
-        query[querysegment].append(updatedqueryline)
+        if not updatedqueryline in query[querysegment]:
+            query[querysegment].append(updatedqueryline)
     else:
         query[querysegment].append(
             command+' => Invalid line => '+arg)
@@ -187,10 +237,14 @@ def addQueryLines(command, prefix, querylinekey, arg, querysegment):
 
 def processCommandLines(action, command, commandlines):
     global query
+    global querygroup
+
+    # if len(query['errors']) > 0:
+    #     return
 
     if commandlines == []:
-        # return [newadvancedquerylines, postfindquerylines]
-        pass
+        return
+
     firstline = ''
     lastline = ''
 
@@ -205,7 +259,6 @@ def processCommandLines(action, command, commandlines):
         'blockproperties',
         'namespace',
     ]:
-
         # if multiple lines in command separate with an OR
         if len(commandlines) > 1:
             if action == 'include':
@@ -237,106 +290,123 @@ def processCommandLines(action, command, commandlines):
             # pages starting with
             if arg[0] != '*' and arg[len(arg)-1] == '*':
                 addQueryLines(command, prefix, 'arg_pagename_startswith',
-                              arg[:-1], 'filters')
+                              arg[:-1])
                 continue
 
             # pages ending with
             if arg[0] == '*' and arg[len(arg)-1] != '*':
                 addQueryLines(command, prefix, 'arg_pagename_endswith',
-                              arg[1:], 'filters')
+                              arg[1:])
                 continue
 
             # pages containing text
             if arg[0] == '*' and arg[len(arg)-1] == '*':
                 addQueryLines(command, prefix, 'arg_pagename_contains',
-                              arg[1:-1], 'filters')
+                              arg[1:-1])
                 continue
 
             # otherwise full pagename provided
-            addQueryLines(command, prefix, 'pagename_is', arg, 'filters')
+            addQueryLines(command, prefix, 'pagename_is', arg)
 
         # --- blocks command
         if command == 'blocks':
             if arg[0] == '*' and arg[len(arg)-1] != '*':
                 addQueryLines(
-                    command, prefix, 'arg_blockcontent_startswith', arg[1:], 'filters')
+                    command, prefix, 'arg_blockcontent_startswith', arg[1:])
                 continue
 
             if arg[0] != '*' and arg[len(arg)-1] == '*':
                 addQueryLines(command, prefix,
-                              'arg_blockcontent_endswith', arg[:-1], 'filters')
+                              'arg_blockcontent_endswith', arg[:-1])
                 continue
 
             if arg[0] == '*' and arg[len(arg)-1] == '*':
                 addQueryLines(
-                    command, prefix, 'arg_blockcontent_contains', arg[1:-1], 'filters')
+                    command, prefix, 'arg_blockcontent_contains', arg[1:-1])
                 continue
 
         # --- pagetags command
         if command == "pagetags":
-            addQueryLines(command, prefix, 'pagetags_are', arg, 'filters')
+            # tags are stored internally in Logseq as lower case
+            args = arg.split()  # allow for multiple tags
+            for arg in args:
+                addQueryLines(command, prefix, 'pagetags_are',
+                              arg.lower())
 
         # --- blocktags command
         if command == "blocktags":
-            addQueryLines(command, prefix, 'blocktags_are', arg, 'filters')
+            # tags are stored internally in Logseq as lower case
+            args = arg.split()  # allow for multiple tags
+            for arg in args:
+                addQueryLines(command, prefix, 'blocktags_are',
+                              arg.lower())
 
         # --- pageproperties command
         #     arg is propertyname,propertyvalue
         if command == "pageproperties":
             addQueryLines(command, prefix,
-                          'page_properties_are', arg, 'filters')
+                          'page_properties_are', arg)
 
         # --- blockproperties command
         #     arg is propertyname,propertyvalue
         if command == "blockproperties":
             addQueryLines(command, prefix,
-                          'block_properties_are', arg, 'filters')
+                          'block_properties_are', arg)
 
         # --- tasks command
         if command == "tasks":
             addQueryLines(command, prefix,
-                          'tasks_are', arg, 'filters')
+                          'tasks_are', arg)
 
         # --- namespace command
         if command == "namespace":
             addQueryLines(command, prefix,
-                          'namespace', arg, 'filters')
+                          'namespace', arg)
 
         # --- scheduled command
         if command == "scheduled":
             addQueryLines(command, prefix,
-                          'scheduled', arg, 'filters')
+                          'scheduled', arg)
 
         # --- scheduledbetween command
         if command == "scheduledbetween":
             addQueryLines(command, prefix,
-                          'scheduledbetween', arg, 'inputs')
+                          'scheduledbetween', arg)
 
         # --- deadline command
         if command == "deadline":
             addQueryLines(command, prefix,
-                          'deadline', arg, 'filters')
+                          'deadline', arg)
 
         # --- deadlinebetween command
         if command == "deadlinebetween":
             addQueryLines(command, prefix,
-                          'deadlinebetween', arg, 'inputs')
+                          'deadlinebetween', arg)
 
         # --- journalonly command
         if command == "journalonly":
             addQueryLines(command, prefix,
-                          'page_is_journal', arg, 'filters')
+                          'page_is_journal', arg)
 
-        # --- journalbetween command
+        # --- journalsbetween command
         if command == "journalsbetween":
             addQueryLines(command, prefix,
-                          'journalbetween', arg, 'inputs')
+                          'journalsbetween', arg)
 
         # --- daterange command
         if command == "daterange":
-            updatedqueryline = getQueryLine(
-                prefix+'daterange').replace("$$ARG1", arg)
-            query['filters'].append(updatedqueryline)
+            addQueryLines(command, prefix,
+                          'daterange', arg)
+
+        # --- collapse command
+        if command == "collapse":
+            addQueryLines(command, prefix,
+                          'collapse', arg)
+
+        # --- expand command
+        if command == "collapse":
+            addQueryLines(command, prefix,
+                          'expand', arg)
 
     if lastline != '':
         query['filters'].append(lastline)
@@ -344,41 +414,138 @@ def processCommandLines(action, command, commandlines):
     return
 
 
+def insertQueryLineIntoSegment(key):
+    querysegmentresponse = getQueryLineSegment(key)[0]
+    querysegmentdata = getQueryLineSegment(key)[1]
+    if querysegmentresponse == 'error':
+        query['errors'].append(querysegmentdata)
+        return
+    querysegment = querysegmentdata
+
+    query[key].append(getQueryLine(key, querysegment))
+    pass
+
+
+def checkUsingPagesorBlocks(commandlines):
+    global querygroup
+    pagesfound = False
+    blocksfound = False
+
+    for commandline in commandlines:
+        commandline = commandline.strip()
+        if commandline.startswith('- pages'):
+            pagesfound = True
+        if commandline.startswith('- blocks'):
+            blocksfound = True
+
+    if pagesfound == True and blocksfound == False:
+        querygroup = "pages-querylines"
+        return
+
+    if blocksfound == True and pagesfound == False:
+        querygroup = "blocks-querylines"
+        return
+
+    if pagesfound == False and blocksfound == False:
+        query['errors'].append(
+            ";; WARNING: Must have 'pages' command or 'blocks' Command\n;;          otherwise the query cannot get any information\n;;          Inserting a blocks command for you\n")
+        insertBlocksCommand(commandlines)
+        blocksfound = True
+        querygroup = "blocks-querylines"
+        return
+
+    if pagesfound and blocksfound:
+        query['errors'].append(
+            ";; ERROR: Cannot have 'pages' command and 'blocks' command together in a command list\n\n")
+        return
+
+
+def insertBlocksCommand(commandlines):
+    # insert blocks command after the title line
+    # if there is not title place at top of the list
+    if len(commandlines) > 0:
+        if commandlines[0].index('title:') > -1:
+            commandlines.insert(1, '    - *')
+            commandlines.insert(1, '- blocks')
+    else:
+        commandlines.insert(0, '- blocks\n    - *\n')
+
+    return
+
+
+def validCommand(command):
+    try:
+        if commandsDict[command]:
+            return True
+    except:
+        return False
+
+
 def processCommandList(commandlists):
     global query
+    global querygroup
+
     query = initialiseQuery()
-    lines = commandlists.split("\n")
+
+    commandlines = commandlists.split("\n")
+
+    # determine if we are querying pages or blocks
+    # pages queries have different query commandlines from blocks
+    # pages command and blocks command cannot be in the same command list
+    # default to blocks command if both pages and blocks command are missing
+
+    checkUsingPagesorBlocks(commandlines)
+
     currentcommand = ''
-    # Element('print_output').write(, str(len(lines)))
-    commandsDict = {}
-    for line in lines:
-        if line.strip() == '' or line.startswith(";;"):
+    # Element('print_output').write(, str(len(commandlines)))
+    commandLinesDict = {}
+    for line in commandlines:
+        if line == '' or line.startswith(";;"):
             continue
-        if line.startswith('title:'):
+        if line.strip().startswith('title:'):
             query["title"].append(getQueryLine('title', 'title').replace(
                 '$$ARG1', line.split(":")[1].strip()))
             continue
         if line.startswith('- '):  # encountered a command
             fields = line.split(" ")
             commandname = fields[1]
-            commandsDict[commandname] = {}
-            if currentcommand == '' or line != currentcommand:
-                currentcommand = commandname
-                commandsDict[commandname]["commandlines"] = []
-        try:
-            commandsDict[commandname]["commandlines"].append(line)
-        except:
-            # TODO: Handle command name being invalid ..
-            # can occur if bad command data in command input text
-            pass
+            if validCommand(commandname):
+                commandLinesDict[commandname] = {}
+                if currentcommand == '' or line != currentcommand:
+                    currentcommand = commandname
+                    commandLinesDict[commandname]["commandlines"] = []
+                    commandLinesDict[commandname]["commandlines"].append(line)
+                    continue
+            else:
+                query['errors'].append(
+                    ";; WARNING: '"+line+"' is not valid command.\n;;          Either a mispelt command or no leading dash")
+                continue
+        # has a hypen after column 1 so must be an command argument line
+        elif line.startswith(' ') and line.strip().startswith('- '):
+            if currentcommand == '':
+                query['errors'].append(
+                    ";; ERROR: '"+line+"' is a command argument but does not have a parent command\n;;       Either a command is missing or this should ne be am argument line")
+            else:
+                # have an argument line
+                commandLinesDict[commandname]["commandlines"].append(line)
+        else:
+            if 'title ' in line:
+                query['errors'].append(
+                    ";; WARNING: title line should start with title:")
+            elif not line.strip().startswith('- ') and not line.find('title:') > -1:
+                query['errors'].append(
+                    ";; WARNING: "+line+" has no leading hypen eg '- pages'")
 
-    query['start'] = [getQueryLine('start', 'start')]
-    query['open'] = [getQueryLine('open', 'open')]
+    # build standard query lines
+    insertQueryLineIntoSegment('start')
+    insertQueryLineIntoSegment('open')
+    insertQueryLineIntoSegment('where')
+    insertQueryLineIntoSegment('closefind')
+    insertQueryLineIntoSegment('closequery')
+    insertQueryLineIntoSegment('end')
 
-    buildCommonQueryLines()
-
-    for command in commandsDict:
-        processCommand(command, commandsDict)
+    for command in commandLinesDict:
+        processCommand(command, commandLinesDict)
 
     query['closefind'] = [getQueryLine('closefind', 'closefind')]
     # finalise query segments
@@ -386,13 +553,6 @@ def processCommandList(commandlists):
     query['end'] = [getQueryLine('end', 'end')]
 
     return
-
-
-def getQuerySegment(key):
-    try:
-        querylines = query[key]
-    except:
-        return []
 
 
 def constructQuery():
@@ -444,21 +604,17 @@ def printInputCommandList(commands):
         print("----------------------------")
         print("Input Command List")
         print("----------------------------")
+        print('Query Group: '+querygroup)
+        print("----------------------------")
         print(commands)
-
-
-def printInputCommandLists():
-    global mode
-    print('Input Command Lists')
-    for commandlist in commandlisttests:
-        print(commandlist)
 
 
 def testQueryBuild(commands):
     global mode
-    printInputCommandList(commands)
+    global querygroup
     processCommandList(commands)
     advancedquery = constructQuery()
+    printInputCommandList(commands)
     printGeneratedAdvancedQuery(advancedquery)
     return advancedquery
 
@@ -600,9 +756,16 @@ def pyScriptInitialise():
 # mode = "python"
 mode = "pyScript"
 
-# toggle showing comments for each generated query line
+# global toggle showing comments for each generated query line
 # showcommandcomments = True
 showcommandcomments = False  # Default value
+
+# global querygroup - current command lists mode
+# Queries either retrieve pages (special blocks of their own)
+# or retieve all blocks including special page blocks
+#   'pages-querylines' mode is for page retrieval queries
+#   'block-querylines' mode is for block retrieval queries
+querygroup = 'blocks-querylines'  # default group
 
 # toggle whether generated query gets wrapped in logseq code block
 # ```clojure
@@ -613,6 +776,9 @@ codeblock = False  # Default value
 # initialise the query structure
 query = initialiseQuery()
 
+# merge the common query lines into the page and blocks group
+querylineDBDict = initialisteQueryLineDict()
+
 # if running in a web server initialise DOM elements
 if mode == "pyScript":
     pyScriptInitialise()
@@ -621,17 +787,8 @@ if mode == "pyScript":
 print('Finished Loading .. You can now enter commands')
 
 # specific tests in local mode (python)
-# testQueryBuild("""- journalsbetween
-#     - :today :30d-after
-# """)
-
-# testQueryBuild("""title: fred nerk
-# - pages
-#     - test*
-# - tags
-#     - ABC
-#     - DEF
-# - blockproperties
-#     - p-major "jimbo"
-
+# testQueryBuild("""title: select and exclude task types
+# - tasks
+#     - TODO
+#     - not DOING
 # """)

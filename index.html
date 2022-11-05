@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <h3>Logseq Advanced Query Builder</h3>
-    <small>v0.1</small>
+    <small>v0.2</small>
     <button id="light theme" class="btn btn-primary active" role="button" aria-pressed="true">Light Theme</button>
     <button id="dark theme" class="btn btn-primary active" role="button" aria-pressed="true">Dark Theme</button>
 
@@ -104,12 +104,21 @@
                     <details class="level2">
                         <summary>Simple Command List</summary>
                         <div>
-                            <small>Note. Wildcards can be full name or partial name using *<br>
-                            <blockquote>                            
-                            test* - starts with text 'test'<br>
-                            *end - ends with text 'end'<br>
-                            *tax* - contains text 'tax'<br>
-                        </small>
+                            <blockquote style="border:dashed 4px rgb(231, 63, 63); padding:10px;">
+                                Queries filter in two ways - pages or blocks<br><br>
+                                <b>pages</b> command retrieves the special blocks that have ONLY the page information<br> such as name, page tags, page properties<br>
+                                <small><i>- these page blocks are placed into the ?block variable</i></small><br><br>
+                                <b>blocks</b> command retrieves every single block in the graph including the special page blocks<br>
+                                <small><i>- these page blocks are placed into the ?block variable and the page this block belongs to is placed in the ?page variable</i></small><br><br>
+                                You must choose a <b>pages</b> command <b>OR</b> a <b>blocks</b> command (you cannot use noth together) 
+                             </blockquote>                             
+                             <blockquote style="border:dashed 3px rgb(97, 132, 215); padding:10px;">                            
+                                <small>
+                                Note. Wildcards can be full name or partial name using *<br>
+                                test* - starts with text 'test'<br>
+                                *end - ends with text 'end'<br>
+                                *tax* - contains text 'tax'<br>
+                                </small>
                             </blockquote>
                             <table>
                                 <tr><td><b>blocks</b></td><td>select logseq blocks by wildcards</td></tr>
@@ -133,6 +142,23 @@
                         <div class="details-content">
                             This web site is hosted on github pages<br>
                             source code is available <a href="https://github.com/adxsoft/logseqadvancedquerybuilder">here</a>
+                        </div>
+                    </details>
+                    <details class="level2">
+                        <summary>Release History</summary>
+                        <div class="details-content">
+                            v0.1<br>
+                            <ul>
+                                <li>Original release</li>
+                            </ul>
+                            v0.2<br>
+                            <ul>
+                                <li>clarify pages retrieval vs blocks retrieval in FAQ, Simple Commands</li>
+                                <li>Force user to choose either pages or block retrieval, Default to block retrieval</li>
+                                <li>improved error messaging</li>
+                                <li>improved descriptions for the generated advanced query lines</li>
+                                <li>bug fixes</li>    
+                            </ul>
                         </div>
                     </details>
                     <details class="level2">
@@ -191,35 +217,36 @@
         </div>
         <h3>Command Input</h3>
         <select id="command_examples">
-            <option value='' selected>Choose Example..</option>
-            <option value='title: pages command - pages by wildcards&#10- pages&#10    - *'>pages - select all pages</option>
-            <option value='title: pages command - specific pages&#10- pages&#10    - yourpagetitle1&#10    - yourpagetitle2'>pages - select specific pages</option>
-            <option value='title: pages command - pages by wildcards&#10- pages&#10    - starttext*&#10    - *endtext&#10    - *anytextanywhere*'>pages - using wildcards (*)</option>
-            <option value='title: pages command - ignore pages (including wildcards)&#10- pages&#10    - not yourpagetitle1&#10    - not yourpagetitle2&#10    - not mypage*&#10    - not starttext*&#10    - not *endtext&#10    - not *anytextanywhere*'>pages - ignore various pages</option>
-            <option value='title: blocks command - ignore blocks using wildcards&#10- pages&#10    - not starttext*&#10    - not *endtext&#10    - not *anytextanywhere*'>blocks - by wildcards</option>
-            <option value='title: blocktags - select and exclude block level tags&#10- blocktags&#10    - tag1&#10    - tag2&#10    - not tag3'>blocktags - select and exclude block level tags</option>
-            <option value='title: blocktags and pages example&#10- pages&#10    - starttext*&#10    - *endtext&#10    - *anytextanywhere*&#10    - not pagetitle1&#10- blocktags&#10    - tag1&#10    - tag2&#10    - not tag3'>blocktags and pages</option>
-            <option value='title: pagetags - page level tags&#10- pages&#10    - starttext*&#10    - *endtext&#10    - *anytextanywhere*&#10    - not pagetitle1&#10- pagetags&#10    - pagetag1&#10    - pagetag2&#10    - not pagetag3'>pagetags - page level tags</option>
-            <option value='title: pagetags and pages&#10- pages&#10    - starttext*&#10    - *endtext&#10    - *anytextanywhere*&#10    - not pagetitle1&#10- pagetags&#10    - pagetag1&#10    - pagetag2&#10    - not pagetag3'>pagetags - with pages selection</option>
-            <option value='title: select and exclude task types&#10- tasks&#10    - TODO&#10    - not DOING'>tasks - select and exclude task types</option>
-            <option value='title: select and exclude task types&#10- pages&#10    - meeting*&#10- tasks&#10    - TODO&#10    - not DOING'>tasks - tasks and pages</option>
-            <option value='title: select and exclude pages with page properties&#10- pageproperties&#10    - pagetype, "meeting"&#10    - pagetype, "seminar"&#10    - not occurence, 1'>page properties - select pages using page property</option>
-            <option value='title: select and exclude blocks with block properties&#10- blockproperties&#10    - grouptype, "meeting"&#10    - grouptype, "seminar"&#10    - not occurence, 1'>block properties - select blocks using block property</option>
-            <option value='title: only search in specific namespace&#10- namespace&#10    - mynamespace'>namespace - only search in specific namespace</option>
-            <option value='title: find block properties in a namespace&#10- namespace&#10    - fictionbooks&#10    - not nonfictionbooks&#10- blockproperties&#10    - bookgenre, "Western"&#10    - bookgenre, "History"'>namespace - find block properties in a namespace</option>
-            <option value='title: find scheduled blocks in a namespace&#10- namespace&#10    - councilmeetings&#10    - not workmeetings&#10- scheduled'>scheduled - find scheduled blocks in a namespace</option>
-            <option value='- scheduledbetween&#10    - :today :30d-after'>scheduled - find scheduled blocks in a date range</option>
-            <option value='title: find blocks with deadlines&#10- deadline'>deadline - find blocks with deadlines</option>
-            <option value='- deadlinebetween&#10    - :today :30d-after'>deadline - find deadline blocks in a date range</option>
-            <option value='- journalonly'>journalonly - find journals only (not pages)</option>
-            <option value='- journalsbetween&#10    - :today :30d-after'>journalsbetween - find future journals in a date range</option>
-            <option value='- journalsbetween&#10    - :30d-before :today'>journalsbetween - find past journals in a date range</option>
-            <option value='- collapse'>collapse - collapse all found blocks</option>
-            <option value='- expand'>expand - expand all found blocks</option>
-            <option value='- showbreadcrumb'>showbreadcrumb - show breadcrumbs for all found blockss</option>
-            <option value='- hidebreadcrumb'>hidebreadcrumb - hide breadcrumbs for all found blockss</option>
+            <option value="" selected>Choose Example..</option>
+            <option value='title: pages command - pages by wildcards&#10- pages&#10    - *&#10'>pages - select all pages</option>
+            <option value='title: pages command - specific pages&#10- pages&#10    - testpage001&#10    - testpage002&#10'>pages - select specific pages</option>
+            <option value='title: pages command - pages by wildcards&#10- pages&#10    - testpage0*&#10    - *012&#10    - *dynamic*&#10'>pages - using wildcards(*)</option>
+            <option value='title: pages command - ignore pages (including wildcards)&#10- pages&#10    - not test*&#10    - not python*&#10    - not *001&#10    - not *dynamic&#10'>pages - ignore various pages</option>
+            <option value='title: blocks command - ignore blocks content using wildcards&#10- blocks&#10    - *This is a single line*&#10    - not *page test*&#10    - not *001&#10'>blocks - content by wildcards</option>
+            <option value='title: blocktags - select and exclude block level tags&#10- blocks&#10    - *&#10- blocktags&#10    - tagB&#10    - tagA&#10    - not tagH&#10'>blocktags - select and exclude block level tags</option>
+            <option value='title: blocktags and pages example&#10- pages&#10    - test*&#10    - not *00*&#10- blocktags&#10    - tagA&#10    - tagB&#10    - not tagH&#10'>blocktags and pages</option>
+            <option value='title: pagetags - page level tags&#10- pages&#10    - python*&#10    - *001&#10    - *00*&#10    - not testpage002&#10- pagetags&#10    - classA&#10    - classB&#10    - not classC&#10'>pagetags - page level tags</option>
+            <option value='title: pagetags and pages&#10- pages&#10    - fluidspage*&#10    - *00*&#10    - not fluidspage001&#10- pagetags&#10    - classA&#10    - classB&#10    - not classD&#10'>pagetags - with pages selection</option>
+            <option value='title: select and exclude task types&#10- blocks&#10    - *&#10- tasks&#10    - TODO&#10    - not DOING&#10'>tasks - select and exclude task types</option>
+            <option value='title: select and exclude task types&#10- pages&#10    - python*&#10- tasks&#10    - TODO&#10    - not DOING&#10'>tasks - tasks and pages</option>
+            <option value='title: select and exclude pages with page properties&#10- pages&#10    - *&#10- pageproperties&#10    - pagetype, "p-basic"',&#10    - pagetype, "p-minor"',&#10    - not pagetype, "p-major"&#10'>page properties - select pages using page property</option>
+            <option value='title: select and exclude blocks with block properties&#10- blocks&#10    - *&#10- blockproperties&#10    - grade, "b-fiction"&#10    - designation, "b-thriller"&#10    - not designation, "b-Alpha"&#10'>block properties - select blocks using block property</option>
+            <option value='title: only search pages in specific namespace&#10- pages&#10    - *&#10- namespace&#10    - tech/python&#10'>namespace - only search pages in specific namespace</option>
+            <option value='title: find block properties in a namespace&#10- blocks&#10    - *&#10- namespace&#10    - tech',&#10- blockproperties&#10    - grade, "b-fiction"&#10    - designation, "b-thriller"&#10    - not designation, "b-Alpha"&#10'>namespace - find block properties in a namespace</option>
+            <option value='title: scheduled - find scheduled blocks in a date range&#10- blocks&#10    - *&#10- scheduledbetween&#10    - :today :30d-after&#10'>scheduled - find scheduled blocks in a date range</option>
+            <option value='title: find blocks with deadlines&#10- blocks&#10    - *&#10- deadline&#10'>deadline - find blocks with deadlines</option>
+            <option value='title: deadline - find deadline blocks in a date range&#10- blocks&#10    - *&#10- deadlinebetween&#10    - : today : 30d-after&#10'>deadline - find deadline blocks in a date range</option>
+            <option value='title: journalonly - find journals only (not pages)&#10- pages&#10    - *&#10- journalonly&#10'>journalonly - find journals only (not pages)</option>
+            <option value='title: journalsbetween - find future journals in a date range&#10- pages&#10    - *&#10- journalsbetween&#10    - :today :30d-after&#10'>journalsbetween - find future journals in a date range</option>
+            <option value='title: journalsbetween - find past journals in a date range&#10- pages&#10    - *&#10- journalsbetween&#10    - :30d-before :today&#10'>journalsbetween - find past journals in a date range</option>
+            <option value='title: collapse - collapse all found blocks&#10- blocks&#10    - *&#10- collapse&#10'>collapse - collapse all found blocks</option>
+            <option value='title: expand - expand all found blocks&#10- blocks&#10    - *&#10- expand&#10'>expand - expand all found blocks</option>
+            <option value='title: showbreadcrumb - show breadcrumbs for all found blocks&#10- blocks&#10    - *&#10- showbreadcrumb&#10'>showbreadcrumb - show breadcrumbs for all found blocks</option>
+            <option value='title: hidebreadcrumb - hide breadcrumbs for all found blocks&#10- blocks&#10    - *&#10- hidebreadcrumb&#10'>hidebreadcrumb - hide breadcrumbs for all found blocks</option>
             
-                                </select>
+            
+
+        </select>
         <br>
         <p>
             <pre><textarea id="commands_input" rows="10" cols="50">
