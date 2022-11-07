@@ -159,8 +159,13 @@ def processCommand(command, commandsDict):
     negativecommandlines = []
     originalcommandlines = commandsDict[command]['commandlines'][1:]
     for commandline in originalcommandlines:
-        if commandline.strip()[2:].startswith("not "):
+        if commandline.strip()[2:].startswith("not ") or \
+           commandline.strip()[2:].startswith("and "):
+            commandline = commandline.replace("and ", "")
             negativecommandlines.append(commandline)
+        elif commandline.strip()[2:].startswith("or "):
+            commandline = commandline.replace("or ", "")
+            positivecommandlines.append(commandline)
         else:
             positivecommandlines.append(commandline)
 
@@ -259,6 +264,7 @@ def processCommandLines(action, command, commandlines):
         'blockproperties',
         'namespace',
     ]:
+
         # if multiple lines in command separate with an OR
         if len(commandlines) > 1:
             if action == 'include':
@@ -787,8 +793,12 @@ if mode == "pyScript":
 print('Finished Loading .. You can now enter commands')
 
 # specific tests in local mode (python)
-# testQueryBuild("""title: select and exclude task types
-# - tasks
-#     - TODO
-#     - not DOING
+# testQueryBuild("""
+# title: select and exclude blocks with block properties using and or
+# - blocks
+#     - *
+# - blockproperties
+#     - grade, "b-fiction"
+#     - or grade, "b-western"
+#     - and designation, "b-thriller"
 # """)

@@ -785,7 +785,133 @@ QueryTestCases = [
 :inputs [:today :30d-after]
 }
 #+END_QUERY
+""",
+    # test 40
+    """title: page property combinations using and and or
+- pages
+    - *
+- pageproperties
+    - pagecategory, "p-minor"
+    - or pagecategory, "p-minimum"
+    - and pagetype, "p-type1"
+#+BEGIN_QUERY
+{
+:title [:b "page property combinations using and and or"]
+:query [:find (pull ?block [*])
+:where
+[?block :block/name ?pagename]
+( or 
+(page-property ?block :pagecategory "p-minor")
+(page-property ?block :pagecategory "p-minimum")
+)
+(page-property ?block :pagetype "p-type1")
+]
+}
+#+END_QUERY
+""",
+    # test 41
+    """title: page tag combinations using and and or
+- pages
+    - *
+- pagetags
+    - classA
+    - or classB
+    - and classH
+#+BEGIN_QUERY
+{
+:title [:b "page tag combinations using and and or"]
+:query [:find (pull ?block [*])
+:where
+[?block :block/name ?pagename]
+[?block :block/journal? false]
+( or 
+(page-tags ?block #{"classa"})
+(page-tags ?block #{"classb"})
+)
+(page-tags ?block #{"classh"})
+]
+}
+#+END_QUERY
+""",
+    # test 42
+    """title: block property combinations using and and or
+- blocks
+    - *
+- blockproperties
+    - category, "b-fiction"
+    - or grade, "b-western"
+    - and category, "b-travel"
+#+BEGIN_QUERY
+{
+:title [:b "block property combinations using and and or"]
+:query [:find (pull ?block [*])
+:where
+[?block :block/content ?blockcontent]
+[?block :block/page ?page]
+[?page :block/name ?pagename]
+( or 
+(property ?block :category "b-fiction")
+(property ?block :grade "b-western")
+)
+(property ?block :category "b-travel")
+]
+}
+#+END_QUERY
+""",
+    # test 43
+    """title: block tag combinations using and and or
+- blocks
+    - *
+- blocktags
+    - tagA
+    - or tagB
+    - and tagD
+#+BEGIN_QUERY
+{
+:title [:b "block tag combinations using and and or"]
+:query [:find (pull ?block [*])
+:where
+[?block :block/content ?blockcontent]
+[?block :block/page ?page]
+[?page :block/name ?pagename]
+( or 
+(page-ref ?block "taga")
+(page-ref ?block "tagb")
+)
+(page-ref ?block "tagd")
+]
+}
+#+END_QUERY
+""",
+    # test 44
+    """title: task and or combintions
+- blocks
+    - *
+- tasks
+    - TODO
+    - and WAITING
+    - or LATER
+    - not DOING
+#+BEGIN_QUERY
+{
+:title [:b "task and or combintions"]
+:query [:find (pull ?block [*])
+:where
+[?block :block/content ?blockcontent]
+[?block :block/page ?page]
+[?page :block/name ?pagename]
+[?block :block/marker ?marker]
+( or 
+[(contains? #{"TODO"} ?marker)]
+[(contains? #{"LATER"} ?marker)]
+)
+[(contains? #{"WAITING"} ?marker)]
+(not [(contains? #{"DOING"} ?marker)])
+]
+}
+#+END_QUERY
 """
+
 ]
 
 # print('No of test cases = '+str(len(QueryTestCases)))

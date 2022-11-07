@@ -1644,3 +1644,33 @@ class Test_Automated_Tests(unittest.TestCase):
         testno = int(functionname.split("_")[1])-1
         theresult = lqb.testQueryBuild(gettestcommands(testno))
         self.assertEqual(theresult, gettestexpectedresults(testno))
+
+    def test_40(self):
+        functionname = sys._getframe().f_code.co_name
+        testno = int(functionname.split("_")[1])-1
+        theresult = lqb.testQueryBuild(gettestcommands(testno))
+        self.assertEqual(theresult, gettestexpectedresults(testno))
+
+    def test_41(self):
+        functionname = sys._getframe().f_code.co_name
+        testno = int(functionname.split("_")[1])-1
+        theresult = lqb.testQueryBuild(gettestcommands(testno))
+        self.assertEqual(theresult, gettestexpectedresults(testno))
+
+    def test_42(self):
+        functionname = sys._getframe().f_code.co_name
+        testno = int(functionname.split("_")[1])-1
+        theresult = lqb.testQueryBuild(gettestcommands(testno))
+        self.assertEqual(theresult, gettestexpectedresults(testno))
+
+    def test_43(self):
+        functionname = sys._getframe().f_code.co_name
+        testno = int(functionname.split("_")[1])-1
+        theresult = lqb.testQueryBuild(gettestcommands(testno))
+        self.assertEqual(theresult, gettestexpectedresults(testno))
+
+    def test_44(self):
+        functionname = sys._getframe().f_code.co_name
+        testno = int(functionname.split("_")[1])-1
+        theresult = lqb.testQueryBuild(gettestcommands(testno))
+        self.assertEqual(theresult, gettestexpectedresults(testno))
