@@ -76,8 +76,21 @@ which will print the following advanced query that you can copy and paste (using
 # Releases
 _Version 0.1_
 - Original release Oct 2022
+
+
 _Version 0.2_
 - clarify pages retrieval vs blocks retrieval in FAQ, Simple Commands
+- Added 'and' and 'or' keywords in arguments for a command, For example can now say
+```
+- tagA
+- or tagA
+```
+and also
+```
+- property category, "fiction"
+- and property category, "western"
+```
+- Added a logseq test graph download button  to help user test advanced queries
 - Force user to choose either pages or block retrieval, Default to block retrieval
 - improved error messaging
 - improved descriptions for the generated advanced query lines
