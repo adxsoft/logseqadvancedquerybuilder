@@ -186,7 +186,7 @@ def checkCommandValid(command):
             commandvalidity = False
             errormessage = '\n;; **ERROR: '+command + \
                 ' not valid with pages command use blocks command instead\n'
-        elif command == 'tasks':
+        elif command == 'tasks' or command == "pagelinks":
             commandvalidity = False
             errormessage = '\n;; **ERROR: '+command + \
                 ' not valid with pages command use blocks command instead\n'
@@ -214,7 +214,12 @@ def addQueryLines(command, prefix, querylinekey, arg):
 
     querysegment = querysegmentdata
 
-    args = arg.split(",")
+    if command == "pagelinks":
+        # force to a single argument as pagelink can contain a comma eg Dev 25th, 2022
+        args = []
+        args.append(arg)
+    else:
+        args = arg.split(",")
 
     # single argument commands
     if len(args) == 1:
@@ -259,6 +264,7 @@ def processCommandLines(action, command, commandlines):
         'blocks',
         'blocktags',
         'pagetags',
+        'pagelinks',
         'tasks',
         'pageproperties',
         'blockproperties',
@@ -358,6 +364,12 @@ def processCommandLines(action, command, commandlines):
         if command == "blockproperties":
             addQueryLines(command, prefix,
                           'block_properties_are', arg)
+
+        # --- pagelinks command
+        if command == "pagelinks":
+            # page links are stored internally in Logseq as lower case
+            addQueryLines(command, prefix, 'pagelinks_are',
+                          arg.lower())
 
         # --- tasks command
         if command == "tasks":
@@ -793,12 +805,8 @@ if mode == "pyScript":
 print('Finished Loading .. You can now enter commands')
 
 # specific tests in local mode (python)
-# testQueryBuild("""
-# title: select and exclude blocks with block properties using and or
-# - blocks
-#     - *
-# - blockproperties
-#     - grade, "b-fiction"
-#     - or grade, "b-western"
-#     - and designation, "b-thriller"
+# testQueryBuild("""title: bad commands
+# - badcommand1
+# - badcommand2
+# forgottenthedash
 # """)

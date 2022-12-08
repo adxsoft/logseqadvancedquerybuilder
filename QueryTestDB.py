@@ -910,7 +910,33 @@ QueryTestCases = [
 ]
 }
 #+END_QUERY
+""",
+    # test 45
+    """title: select blocks with links to pages
+- blocks
+    - *
+- pagelinks
+    - gardening
+    - vegetables
+    - not turnips
+#+BEGIN_QUERY
+{
+:title [:b "select blocks with links to pages"]
+:query [:find (pull ?block [*])
+:where
+[?block :block/content ?blockcontent]
+[?block :block/page ?page]
+[?page :block/name ?pagename]
+( or 
+[?block :block/path-refs [:block/name "gardening"]]
+[?block :block/path-refs [:block/name "vegetables"]]
+)
+(not [?block :block/path-refs [:block/name "turnips"]])
+]
+}
+#+END_QUERY
 """
+
 
 ]
 

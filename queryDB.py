@@ -53,7 +53,7 @@ querylineDict = {
         'tasks_are':
         {
             'name': 'tasks_are',
-            'useincommands': ['blocks'],
+            'useincommands': ['common'],
             'segment': 'filters',
             'datalog': '[(contains? #{"$$ARG1"} ?marker)]',
             'comment': 'Select block if it has one or more tasks (TODO or DONE etc)'
@@ -65,6 +65,22 @@ querylineDict = {
             'segment': 'filters',
             'datalog': '(not [(contains? #{"$$ARG1"} ?marker)])',
             'comment': 'Exclude block if it has one or more tasks'
+        },
+        'pagelinks_are':
+        {
+            'name': 'pagelinks_are',
+            'useincommands': ['common'],
+            'segment': 'filters',
+            'datalog': '[?block :block/path-refs [:block/name "$$ARG1"]]',
+            'comment': 'Select block if it has one or more links to other pages'
+        },
+        'not_pagelinks_are':
+        {
+            'name': 'not_pagelinks_are',
+            'useincommands': ['common'],
+            'segment': 'filters',
+            'datalog': '(not [?block :block/path-refs [:block/name "$$ARG1"]])',
+            'comment': 'Exclude block if it has one or more links to other pages'
         },
         'scheduledbetween':
         {
@@ -684,6 +700,11 @@ commandsDict = {
             "not_page_is_journal"
         ],
         "description": "select pages by tag"
+    },
+    "pagelinks":  {
+        "querylines": [
+        ],
+        "description": "select any blocks that has links to pages"
     },
     "tasks": {
         "querylines":  [

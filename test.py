@@ -70,7 +70,6 @@ class Test_negative_manual_tests(unittest.TestCase):
             commands = 'title: test missing pages and blocks\n- '+command+'\n'
             result = lqb.testQueryBuild(commands)
             results += '\nRESULT for '+command+'\n\n'+result+'\n\n'
-
         expectedresults = """
 RESULT for blocks
 
@@ -287,6 +286,26 @@ RESULT for pagetags
 [?block :block/page ?page]
 [?page :block/name ?pagename]
 [?page :block/journal? false]
+]
+}
+#+END_QUERY
+
+
+
+RESULT for pagelinks
+
+#+BEGIN_QUERY
+;; WARNING: Must have \'pages\' command or \'blocks\' Command
+;;          otherwise the query cannot get any information
+;;          Inserting a blocks command for you
+
+{
+:title [:b "test missing pages and blocks"]
+:query [:find (pull ?block [*])
+:where
+[?block :block/content ?blockcontent]
+[?block :block/page ?page]
+[?page :block/name ?pagename]
 ]
 }
 #+END_QUERY
@@ -1670,6 +1689,12 @@ class Test_Automated_Tests(unittest.TestCase):
         self.assertEqual(theresult, gettestexpectedresults(testno))
 
     def test_44(self):
+        functionname = sys._getframe().f_code.co_name
+        testno = int(functionname.split("_")[1])-1
+        theresult = lqb.testQueryBuild(gettestcommands(testno))
+        self.assertEqual(theresult, gettestexpectedresults(testno))
+
+    def test_45(self):
         functionname = sys._getframe().f_code.co_name
         testno = int(functionname.split("_")[1])-1
         theresult = lqb.testQueryBuild(gettestcommands(testno))
