@@ -935,7 +935,31 @@ QueryTestCases = [
 ]
 }
 #+END_QUERY
+""",
+    # test 46
+    """title: select blocks with links to journals
+- blocks
+    - *
+- pagelinks
+    - Dec 25th, 2022
+    - Jan 1st, 2019
+#+BEGIN_QUERY
+{
+:title [:b "select blocks with links to journals"]
+:query [:find (pull ?block [*])
+:where
+[?block :block/content ?blockcontent]
+[?block :block/page ?page]
+[?page :block/name ?pagename]
+( or 
+[?block :block/path-refs [:block/name "dec 25th, 2022"]]
+[?block :block/path-refs [:block/name "jan 1st, 2019"]]
+)
+]
+}
+#+END_QUERY
 """
+
 
 
 ]

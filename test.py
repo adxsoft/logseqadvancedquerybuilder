@@ -1699,3 +1699,9 @@ class Test_Automated_Tests(unittest.TestCase):
         testno = int(functionname.split("_")[1])-1
         theresult = lqb.testQueryBuild(gettestcommands(testno))
         self.assertEqual(theresult, gettestexpectedresults(testno))
+
+    def test_46(self):
+        functionname = sys._getframe().f_code.co_name
+        testno = int(functionname.split("_")[1])-1
+        theresult = lqb.testQueryBuild(gettestcommands(testno))
+        self.assertEqual(theresult, gettestexpectedresults(testno))
