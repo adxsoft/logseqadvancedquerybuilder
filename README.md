@@ -2,7 +2,7 @@
 
 An Experimental online tool to help Logseq Users build advanced queries from <b><i>simple</i></b> commands.
 
-**Updated 5th Nov 2022 see Releases section below**
+**Updated 8th Dec 2022 see Releases section below**
 
 You can run this tool online at https://adxsoft.github.io/logseqadvancedquerybuilder/
 
@@ -95,3 +95,32 @@ and also
 - improved error messaging
 - improved descriptions for the generated advanced query lines
 - bug fixes
+
+_Version 0.3_ Dec 8th 2022
+- added the <i>pagelinks</i> command which will select blocks that have links to specific pages or journals
+
+Example: To select blocks referring to page1 OR page 2
+```
+- blocks
+  - *
+- pagelinks
+  - page1
+  - page2
+```
+Example: To select blocks referring to page1 AND page 2
+```
+- blocks
+  - *
+- pagelinks
+  - page1
+  - and page2
+```
+Example: To select blocks referring to Xmas day journal
+(assumes your date format is the default format)
+```
+- blocks
+  - *
+- pagelinks
+  - Dec 25th, 2022
+```
+If you use a different date format use that in the journal reference
