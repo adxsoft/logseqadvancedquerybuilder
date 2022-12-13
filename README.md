@@ -2,7 +2,8 @@
 
 An Experimental online tool to help Logseq Users build advanced queries from <b><i>simple</i></b> commands.
 
-**Updated 8th Dec 2022 see Releases section below**
+**Updated 14th Dec 2022 to v0.4 see Releases section below**
+**SITE HAS BEEN COMPLETELY REWRITTEN IN JAVASCRIPT FOR STABILITY**
 
 You can run this tool online at https://adxsoft.github.io/logseqadvancedquerybuilder/
 
@@ -124,3 +125,13 @@ Example: To select blocks referring to Xmas day journal
   - Dec 25th, 2022
 ```
 If you use a different date format use that in the journal reference
+
+_Version 0.4_ Dec 14th 2022
+Redeveloped in Javascript for speed and stability
+- pyscript is still in alpha and early days so changes are happening all the time
+- javascript is stable
+- code base has been changed so that the core functions can operate in one of three ways 
+(mode variable controls which operation is chosen _website_,_local_,_logseq-plugin_
+  - as this website, 
+  - locally for testing
+  - as a logseq plugin (distributed to a separate repository)
