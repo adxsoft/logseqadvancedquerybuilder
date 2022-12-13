@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en"></html>
+<html>
+    <h3>Logseq Advanced Query Builder</h3>
+    <small>v0.4 Javascript Version</small>
+    <button id="light theme" class="btn btn-primary active" role="button" aria-pressed="true">Light Theme</button>
+    <button id="dark theme" class="btn btn-primary active" role="button" aria-pressed="true">Dark Theme</button>
+    <a href="./logseqTestGraph.zip" title="Click to download a full logseq test graph that is ready to use with many pages, journals, namespaces, tags etc. There are many query examples to play around with queries">Download a test graph</a>
+
+    <p>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- Custom style.css -->
+        <link rel="stylesheet" href="style.css" type="text/css">
+        
+        <title>Logseq Query Builder</title>
+    </head>
+
+    <body>
+        <div>
+            <div>
+                <i>An Experimental online tool to help Logseq Users build advanced queries from simple commands.</i>
+
+                <hr>
+            </div>   
+            <details  class="level1">
+                <summary>FAQ</summary>
+                    <details class="level2">
+                        <summary>How to use</summary>
+                        <div class="details-content">
+                            The simple commands are entered as a text outline in the Command Input area<br>
+                                <blockquote>
+                                    <pre>
+- commandname
+    - argument
+    - argument</pre>
+Optionally arguments can begin with any of the words <b>and</b>,<b>or</b>,<b>and</b>,
+                                  </blockquote>
+                            <hr>
+                            <ul>
+                                <li>Enter commands in the yellow area below or choose an example.</li>
+                                <li>Tick <i>Include Query Comments</i> to show query line comments</li>
+                                <li>Tick  <i>Copy as code block</i> to wrap query in a Logseq code block</li>
+                                <li>Click the <b>Generate Advanced Query</b> button</li>
+                                to build the query.
+                                <ul>
+                                    <li>Optionally you can include comments for each query line.</i>
+                                </ul>
+                                <li>Copy the generated advanced query to the clipboard></li>
+                                <ul>
+                                    <li>(if necessary scroll down to see the result)</i>
+                                </l>
+                                
+                                <li>Paste into Logseq using <i>Cmd(or Ctrl) Shift V</i></li><hr>
+                            </ul>
+                        </div>
+                    </details>
+                    <details class="level2">
+                        <summary>Why did I build this tool</summary>
+                        <div class="details-content">
+                            The reason I created this query builder was for the following reasons
+                            <ul>
+                                <li>Advanced Queries have a complicated syntax that causes errors eg. missing brackets</li>  
+                                <li>For non developers they can build advanced queries and avoid having to learn programming in clojure and datalog</li>  
+                                <li>Logseq users can learn by using the examples to generate queries with detailed comments</li>  
+                                <li>As the generator is web based it can be accessed from desktop or mobile devices as generated queries are always copied to the clipboard</li>
+                            </ul>  
+                        </div>
+                    </details>
+                    <details class="level2">
+                        <summary>Simple Command List</summary>
+                        <div>
+                            <blockquote style="border:dashed 4px rgb(231, 63, 63); padding:10px;">
+                                Queries filter in two ways - pages or blocks<br><br>
+                                <b>pages</b> command retrieves the special blocks that have ONLY the page information<br> such as name, page tags, page properties<br>
+                                <small><i>- these page blocks are placed into the ?block variable</i></small><br><br>
+                                <b>blocks</b> command retrieves every single block in the graph including the special page blocks<br>
+                                <small><i>- these page blocks are placed into the ?block variable and the page this block belongs to is placed in the ?page variable</i></small><br><br>
+                                You must choose a <b>pages</b> command <b>OR</b> a <b>blocks</b> command (you cannot use noth together) 
+                             </blockquote>                             
+                             <blockquote style="border:dashed 3px rgb(97, 132, 215); padding:10px;">                            
+                                <small>
+                                Note. Wildcards can be full name or partial name using *<br>
+                                test* - starts with text 'test'<br>
+                                *end - ends with text 'end'<br>
+                                *tax* - contains text 'tax'<br>
+                                </small>
+                            </blockquote>
+                            <table>
+                                <tr><td><b>blocks</b></td><td>select logseq blocks by wildcards</td></tr>
+                                <tr><td><b>blockproperties</b></td><td>select blocks by property values</td></tr>
+                                <tr><td><b>blocktags</b></td><td>select blocks by tag</td></tr>
+                                <tr><td><b>deadline</b></td><td>select pages or blocks that have a deadline</td></tr>
+                                <tr><td><b>deadlinebetween</b></td><td>select pages or blocks that have a deadline in a date range</td></tr>
+                                <tr><td><b>journalsbetween</b></td><td>only select journal pages in a date range</td></tr>
+                                <tr><td><b>journalonly</b></td><td>only select journal pages</td></tr>
+                                <tr><td><b>namespace</b></td><td>select pages or blocks within a namespace</td></tr>
+                                <tr><td><b>pages</b></td><td>select pages by wildcards</td></tr>
+                                <tr><td><b>pageproperties</b></td><td>select pages by page properties</td></tr>
+                                <tr><td><b>pagetags</b></td><td>select pages by tag</td></tr>
+                                <tr><td><b>pagelinks</b></td><td>select blocks that have links to pages<br>- note. Journal page link is your chosen format in your settings. For example <i>Dec 25th, 2022</i></td></tr>
+                                <tr><td><b>tasks</b></td><td>select tasks</td></tr>
+                                <tr><td><b>scheduled</b></td><td>select pages or blocks that are scheduled</td></tr>
+                                <tr><td><b>scheduledbetween</b></td><td>select pages or blocks that are scheduled in a date range</td></tr>                            </table>
+                        </div>
+                    </details>
+                    <details class="level2">
+                        <summary>About</summary>
+                        <div class="details-content">
+                            This web site is hosted on github pages<br>
+                            source code is available <a href="https://github.com/adxsoft/logseqadvancedquerybuilder">here</a>
+                        </div>
+                    </details>
+                    <details class="level2">
+                        <summary>Release History</summary>
+                        <div class="details-content">
+                            v0.1<br>
+                            <ul>
+                                <li>Original release</li>
+                            </ul>
+                            v0.2<br>
+                            <ul>
+                                <li>clarify pages retrieval vs blocks retrieval in FAQ, Simple Commands</li>
+                                <li>Added 'and' and 'or' keywords in arguments for a command, For example<br>
+                                    can now say<br>
+                                        - tagA<br>
+                                        - or tagA<br>
+                                    and also<br>
+                                        - property category, "fiction"<br>
+                                        - and property category, "western"<br>
+                                </li>
+                                <li>Added a logseq test graph for download to help user test advanced queries</li>
+                                <li>Force user to choose either pages or block retrieval, Default to block retrieval</li>
+                                <li>improved error messaging</li>
+                                <li>improved descriptions for the generated advanced query lines</li>
+                                <li>bug fixes</li>    
+                            </ul>
+                            v0.3<br>
+                            <ul>
+                                <li>Added pagelinks command to select blocks with specific pagelinks</li>
+                            </ul>
+                            v0.4<br>
+                            <ul>
+                                <li>Conversion from pyscript to javascript</li>
+                            </ul>
+                        </div>
+                    </details>
+                    <details class="level2">
+                        <summary>Licence</summary>
+                        <div class="details-content">
+                            This tool is free to use by anyone. I built it for my own educational purposes to learn advanced queries and I'm still a novice so the generated queries reflect my current understanding of advanced queries that I have been able to test on Logseq 0.8.2 in October 2022<br>
+                            The advanced queries generated are my interpretation of advanced queries from researching the logseq discord forum and links on the logseq site.<br>
+                            I have not yet included the result-transform or view sections of advanced queries as I am still trying to understand them sufficiently to generate meaningful queries.
+                        <hr>
+                            <h5>DISCLAIMER</h5>
+                            <BR>
+                            logseqquerybuilder is distributed under GNU General Public License v3.<BR>
+                            <BR>
+                            This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you are welcome to<BR>
+                            redistribute it under certain conditions.<BR>
+                            <BR>
+                            <h5>LICENSE</h5>
+                            <BR>
+                            This program is free software: you can redistribute it and/or modify<BR>
+                            it under the terms of the GNU General Public License as published by<BR>
+                            the Free Software Foundation, either version 3 of the License, or<BR>
+                            (at your option) any later version.<BR>
+                            <BR>
+                            This program is distributed in the hope that it will be useful,<BR>
+                            but WITHOUT ANY WARRANTY; without even the implied warranty of<BR>
+                            MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.<BR>
+                            <BR>
+                            Please see http://www.gnu.org/licenses/ http://www.gnu.org/licenses/ for details.<BR>
+                            <BR>
+                            <h5>WARRANTY</h5>
+                            <BR>
+                            THERE IS NO WARRANTY FOR THE PROGRAM, TO THE EXTENT PERMITTED BY<BR>
+                            APPLICABLE LAW. EXCEPT WHEN OTHERWISE STATED IN WRITING THE COPYRIGHT<BR>
+                            HOLDERS AND/OR OTHER PARTIES PROVIDE THE PROGRAM “AS IS” WITHOUT WARRANTY<BR>
+                            OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO,<BR>
+                            THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR<BR>
+                            PURPOSE. THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE PROGRAM<BR>
+                            IS WITH YOU. SHOULD THE PROGRAM PROVE DEFECTIVE, YOU ASSUME THE COST OF<BR>
+                            ALL NECESSARY SERVICING, REPAIR OR CORRECTION.<BR>
+                            <BR>
+                            <h5>LIABILITY</h5>
+                            <BR>
+                            IN NO EVENT UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN WRITING WILL<BR>
+                            ANY COPYRIGHT HOLDER, OR ANY OTHER PARTY WHO MODIFIES AND/OR CONVEYS THE<BR>
+                            PROGRAM AS PERMITTED ABOVE, BE LIABLE TO YOU FOR DAMAGES, INCLUDING ANY<BR>
+                            GENERAL, SPECIAL, INCIDENTAL OR CONSEQUENTIAL DAMAGES ARISING OUT OF THE<BR>
+                            USE OR INABILITY TO USE THE PROGRAM (INCLUDING BUT NOT LIMITED TO LOSS OF<BR>
+                            DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR THIRD<BR>
+                            PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS),<BR>
+                            EVEN IF SUCH HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF<BR>
+                            SUCH DAMAGES.
+                        </div>
+                    </details>
+                </div>
+            <hr>
+        </div>
+        <h3>Command Input</h3>
+        <select id="command_examples">
+            <option value="" selected>Choose Example..</option>
+            <option value='title: pages command - pages by wildcards&#10- pages&#10    - *&#10'>pages - select all pages</option>
+            <option value='title: pages command - specific pages&#10- pages&#10    - testpage001&#10    - testpage002&#10'>pages - select specific pages</option>
+            <option value='title: pages command - pages by wildcards&#10- pages&#10    - testpage0*&#10    - *012&#10    - *dynamic*&#10'>pages - using wildcards(*)</option>
+            <option value='title: pages command - ignore pages (including wildcards)&#10- pages&#10    - not test*&#10    - not python*&#10    - not *001&#10    - not *dynamic&#10'>pages - ignore various pages</option>
+            <option value='title: blocks command - ignore blocks content using wildcards&#10- blocks&#10    - *This is a single line*&#10    - not *page test*&#10    - not *001&#10'>blocks - content by wildcards</option>
+            <option value='title: blocktags - select and exclude block level tags&#10- blocks&#10    - *&#10- blocktags&#10    - tagB&#10    - tagA&#10    - not tagH&#10'>blocktags - select and exclude block level tags</option>
+            <option value='title: blocktags and pages example&#10- pages&#10    - test*&#10    - not *00*&#10- blocktags&#10    - tagA&#10    - tagB&#10    - not tagH&#10'>blocktags and pages</option>
+            <option value='title: pagetags - page level tags using&#10- pages&#10    - python*&#10    - *001&#10    - *00*&#10    - not testpage002&#10- pagetags&#10    - classA&#10    - classB&#10    - not classC&#10'>pagetags - page level tags</option>
+            <option value='title: pagetags and pages&#10- pages&#10    - fluidspage*&#10    - *00*&#10    - not fluidspage001&#10- pagetags&#10    - classA&#10    - classB&#10    - not classD&#10'>pagetags - with pages selection</option>
+            <option value='title: pagetags and pages&#10- pages&#10    - clients*&#10- pagetags&#10    - classA&#10    - and classB&#10    - or classD&#10'>pagetags - with pages selection using and or</option>
+            <option value='title: select blocks with links to pages&#10- blocks&#10    - *&#10- pagelinks&#10    - gardening&#10    - vegetables&#10'>pagelinks - select blocks with links to pages</option>
+            <option value='title: select and exclude task types&#10- blocks&#10    - *&#10- tasks&#10    - TODO&#10    - not DOING&#10'>tasks - select and exclude task types</option>
+            <option value='title: select and exclude task types&#10- pages&#10    - python*&#10- tasks&#10    - TODO&#10    - not DOING&#10'>tasks - tasks and pages</option>
+            <option value='title: select and exclude pages with page properties&#10- pages&#10    - *&#10- pageproperties&#10    - pagetype, "p-basic"',&#10    - pagetype, "p-minor"',&#10    - not pagetype, "p-major"&#10'>page properties - select pages using page property</option>
+            <option value='title: select and exclude pages with page properties using and or&#10- pages&#10    - *&#10- pageproperties&#10    - pagetype, "meeting"&#10    - or pagetype, "phonecall"&#10    - and clienttype, "industrial"&#10'>page properties - using prefixes and or</option>
+            <option value='title: select and exclude blocks with block properties&#10- blocks&#10    - *&#10- blockproperties&#10    - grade, "b-fiction"&#10    - designation, "b-thriller"&#10    - not designation, "b-Alpha"&#10'>block properties - select blocks using block property</option>
+            <option value='title: select and exclude blocks with block properties using and or&#10- blocks&#10    - *&#10- blockproperties&#10    - grade, "b-fiction"&#10    - or grade, "b-western"&#10    - and designation, "b-thriller"&#10'>block properties - using prefixes and or</option>
+            <option value='title: only search pages in specific namespace&#10- pages&#10    - *&#10- namespace&#10    - tech/python&#10'>namespace - only search pages in specific namespace</option>
+            <option value='title: find block properties in a namespace&#10- blocks&#10    - *&#10- namespace&#10    - tech',&#10- blockproperties&#10    - grade, "b-fiction"&#10    - designation, "b-thriller"&#10    - not categpry, "audio"&#10'>namespace - find block properties in a namespace</option>
+            <option value='title: scheduled - find scheduled blocks in a date range&#10- blocks&#10    - *&#10- scheduledbetween&#10    - :today :30d-after&#10'>scheduled - find scheduled blocks in a date range</option>
+            <option value='title: find blocks with deadlines&#10- blocks&#10    - *&#10- deadline&#10'>deadline - find blocks with deadlines</option>
+            <option value='title: deadline - find deadline blocks in a date range&#10- blocks&#10    - *&#10- deadlinebetween&#10    - : today : 30d-after&#10'>deadline - find deadline blocks in a date range</option>
+            <option value='title: journalonly - find journals only (not pages)&#10- pages&#10    - *&#10- journalonly&#10'>journalonly - find journals only (not pages)</option>
+            <option value='title: journalsbetween - find future journals in a date range&#10- pages&#10    - *&#10- journalsbetween&#10    - :today :30d-after&#10'>journalsbetween - find future journals in a date range</option>
+            <option value='title: journalsbetween - find past journals in a date range&#10- pages&#10    - *&#10- journalsbetween&#10    - :30d-before :today&#10'>journalsbetween - find past journals in a date range</option>
+            <option value='title: collapse - collapse all found blocks&#10- blocks&#10    - *&#10- collapse&#10'>collapse - collapse all found blocks</option>
+            <option value='title: expand - expand all found blocks&#10- blocks&#10    - *&#10- expand&#10'>expand - expand all found blocks</option>
+            <option value='title: showbreadcrumb - show breadcrumbs for all found blocks&#10- blocks&#10    - *&#10- showbreadcrumb&#10'>showbreadcrumb - show breadcrumbs for all found blocks</option>
+            <option value='title: hidebreadcrumb - hide breadcrumbs for all found blocks&#10- blocks&#10    - *&#10- hidebreadcrumb&#10'>hidebreadcrumb - hide breadcrumbs for all found blocks</option>
+        </select>
+        <br>
+        <p>
+            <pre><textarea id="commands_input" rows="10" cols="50">
+                </textarea>
+            </pre>
+            <p>
+            <button id="clear_commands_button" type="button">Clear</button>
+        <hr>
+        <h3>Generated Query</h3>
+        <div class="checkbox">
+            <input id='command_comments_checkbox' type="checkbox" style="margin-right:10px;" value="unchecked">Include Query Comments
+            <input id='codeblock_checkbox' type="checkbox" style="margin-right:10px; margin-left:10px;" value="unchecked">Copy as code block<p>
+        </div>
+        <button id="generate_query_button" type="button">Generate Advanced Query</button>
+        <button id="copy" hidden class="btn btn-primary active" role="button" aria-pressed="true">Copy Query to Clipboard</button>
+        <p>
+        <div id="command_list"></div>
+        <br>
+        <div id="advanced_query" class="generatedquery"></div>
+        <p>
+        <hr>                        
+        <h5>Status</h5>
+        <div id="print_output"  class="statusbar";>
+        </div>
+    </div>
+    
+</body>
+<script src="index.js"></script>
+
+<script>
+    function isElectron() {
+        // Renderer process
+        if (typeof window !== 'undefined' && typeof window.process === 'object' && window.process.type === 'renderer') {
+            return true;
+        }
+
+        // Main process
+        if (typeof process !== 'undefined' && typeof process.versions === 'object' && !!process.versions.electron) {
+            return true;
+        }
+
+        // Detect the user agent when the `nodeIntegration` option is set to true
+        if (typeof navigator === 'object' && typeof navigator.userAgent === 'string' && navigator.userAgent.indexOf('Electron') >= 0) {
+            return true;
+        }
+
+        return false;
+    }
+    
+    function copySummary(){
+        let summaryText = document.getElementById("advanced_query").innerText
+
+        navigator.clipboard.writeText(summaryText).then(function(){
+            console.log("Copied to clipboard!")
+        }, 
+            function(err){
+                console.log("Could not copy text")
+            }
+        )
+    }
+
+    document.getElementById("commands_input").focus()
+
+        let copyButton = document.getElementById("copy");
+        copyButton.addEventListener("click", copySummary);
+
+    </script>
+    <script>
+        
+        var r = document.querySelector(':root');
+
+        // Create a function for getting a variable value
+        function cssVar_get(cssvarname) {
+            // Get the styles (properties and values) for the root
+            var rs = getComputedStyle(r);
+            return rs.getPropertyValue(cssvarname);
+        }
+
+        function cssVar_set(bgcolor,fgcolor) {
+            r.style.setProperty('--current-bg', bgcolor);
+            r.style.setProperty('--current-fg', fgcolor);
+        }
+
+        function setLightTheme() {
+            cssVar_set(cssVar_get('--light-bg'),cssVar_get('--light-fg'));
+        }
+        
+        function setDarkTheme() {
+            cssVar_set(cssVar_get('--dark-bg'),cssVar_get('--dark-fg'));
+        }
+
+        let LightThemeButton = document.getElementById("light theme");
+        LightThemeButton.addEventListener("click", setLightTheme);
+
+        let DarkThemeButton = document.getElementById("dark theme");
+        DarkThemeButton.addEventListener("click", setDarkTheme);
+
+
+
+    </script>
+</html>
