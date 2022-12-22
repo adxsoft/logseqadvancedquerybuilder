@@ -17,13 +17,11 @@ See the FAQ for instructions and examples of how to use the tool
 Also see https://github.com/adxsoft/buildlogseqtestgraph for building a test graph to checkout the advanced queries you build with this tool
 
 ## Technical information
-The tool is built in python 3 and uses pyscript (https://pyscript.net/) for the web user interface.
+The tool is built in javascript. 
 
-<i>Note. pyscript can take quite a few seconds to start the first time you use the tool. Thereafter the load time for the page is reasonably good.</i>
+To test locally set the mode variable to 'local'. Once this is set you can use Jest Testing Library with the included _index.tests.js_ file.
 
-If you want to just run the python program <i>logseqquerybuilder.py</i> then you make the following changes in the code of <i>logseqquerybuilder.py</i>
-
-1. change the line `mode = "pyscript"` to `mode = "python"`
+To deploy to the web set the mode to 'website'
 
 2. To input a set of simple commands to generate an advanced query, add the following code at the end of <i>logseqquerybuilder.py</i>
 
