@@ -2,6 +2,9 @@
 
 An Experimental online tool to help Logseq Users build advanced queries from <b><i>simple</i></b> commands.
 
+**News Flash 3rd March 2023**
+**Logseq plugin now officially in the Logseq Marketplace**
+
 **News Flash 30th Dec 2022**
 **Logseq plugin with same functionality now developed.** You can get it [here](https://github.com/adxsoft/logseq-query-builder-plugin) and see it in action [here](https://youtu.be/EA2jLSQ_WMA)
 
