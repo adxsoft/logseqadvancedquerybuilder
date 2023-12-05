@@ -2070,12 +2070,12 @@ function processCommandLines(action, command, commandlines) {
 
         if (command === "blocks") {
             if (arg[0] !== "*" && arg[arg.length - 1] === "*") {
-                addQueryLines(command, prefix, "arg_blockcontent_startswith", arg.substring(1));
+                addQueryLines(command, prefix, "arg_blockcontent_startswith", arg.substring(0, arg.length - 1));
                 continue;
             }
 
             if (arg[0] === "*" && arg[arg.length - 1] !== "*") {
-                addQueryLines(command, prefix, "arg_blockcontent_endswith", arg.substring(0, arg.length - 1));
+                addQueryLines(command, prefix, "arg_blockcontent_endswith", arg.substring(1));
                 continue;
             }
 
